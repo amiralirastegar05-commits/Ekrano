@@ -1,0 +1,4219 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="theme-color" content="#08080d">
+    <meta name="description" content="Ekranoo | طراح گرافیک و تدوینگر">
+    <meta name="author" content="Ekranoo">
+
+    <title>Ekranoo | طراح گرافیک و تدوینگر</title>
+
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <!-- Persian Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800;900&display=swap"
+          rel="stylesheet">
+
+    <style>
+
+        /* =====================================================
+           ROOT
+        ===================================================== */
+
+        :root {
+            --bg: #08080d;
+            --bg-2: #0d0d15;
+
+            --card: rgba(255,255,255,.055);
+            --card-hover: rgba(255,255,255,.09);
+
+            --border: rgba(255,255,255,.11);
+
+            --text: #ffffff;
+            --muted: #a8a8b8;
+
+            /* رنگ اصلی برند */
+            --primary: #fc9ed1;
+            --primary-2: #ff5eaa;
+
+            --shadow: 0 25px 80px rgba(0,0,0,.45);
+
+            --radius: 24px;
+            --transition: .3s ease;
+        }
+
+
+        /* =====================================================
+           RESET
+        ===================================================== */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+
+            -webkit-tap-highlight-color: transparent;
+        }
+
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+
+        body {
+            font-family: "Vazirmatn", Tahoma, sans-serif;
+
+            background:
+                radial-gradient(
+                    circle at 15% 15%,
+                    rgba(252,158,209,.09),
+                    transparent 28%
+                ),
+
+                radial-gradient(
+                    circle at 85% 50%,
+                    rgba(255,94,170,.06),
+                    transparent 30%
+                ),
+
+                var(--bg);
+
+            color: var(--text);
+
+            min-height: 100vh;
+
+            overflow-x: hidden;
+        }
+
+
+        body::before {
+            content: "";
+
+            position: fixed;
+
+            inset: 0;
+
+            pointer-events: none;
+
+            z-index: -1;
+
+            background:
+                linear-gradient(
+                    rgba(255,255,255,.012) 1px,
+                    transparent 1px
+                ),
+
+                linear-gradient(
+                    90deg,
+                    rgba(255,255,255,.012) 1px,
+                    transparent 1px
+                );
+
+            background-size: 45px 45px;
+
+            mask-image:
+                linear-gradient(
+                    to bottom,
+                    black,
+                    transparent 90%
+                );
+        }
+
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+
+        button {
+            font-family: inherit;
+        }
+
+
+        .container {
+            width: min(1100px, 92%);
+            margin: auto;
+        }
+
+
+        /* =====================================================
+           PROTECT PORTFOLIO IMAGES
+           
+           این بخش فقط جلوی روش‌های ساده دانلود را می‌گیرد.
+           جلوگیری 100٪ از کپی تصویر در وب ممکن نیست.
+        ===================================================== */
+
+        .work-card,
+        .work-card img,
+        #modalImage {
+            -webkit-user-select: none;
+            user-select: none;
+
+            -webkit-user-drag: none;
+
+            -webkit-touch-callout: none;
+        }
+
+
+        .work-card img,
+        #modalImage {
+            pointer-events: none;
+        }
+
+
+        /* =====================================================
+           HEADER
+        ===================================================== */
+
+        header {
+            position: fixed;
+
+            top: 18px;
+            right: 0;
+            left: 0;
+
+            z-index: 1000;
+
+            pointer-events: none;
+        }
+
+
+        .topbar {
+            width: min(1100px, 92%);
+
+            margin: auto;
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            pointer-events: auto;
+        }
+
+
+        .brand-mini {
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+
+            padding: 9px 14px;
+
+            border: 1px solid var(--border);
+
+            background: rgba(10,10,15,.65);
+
+            backdrop-filter: blur(18px);
+
+            -webkit-backdrop-filter: blur(18px);
+
+            border-radius: 50px;
+        }
+
+
+        .brand-mini img {
+            width: 34px;
+            height: 34px;
+
+            border-radius: 50%;
+
+            object-fit: cover;
+        }
+
+
+        .brand-mini span {
+            font-weight: 800;
+        }
+
+
+        .menu-btn {
+            width: 48px;
+            height: 48px;
+
+            border: 1px solid var(--border);
+
+            border-radius: 15px;
+
+            background: rgba(10,10,15,.7);
+
+            backdrop-filter: blur(18px);
+
+            color: white;
+
+            cursor: pointer;
+
+            font-size: 20px;
+
+            transition: var(--transition);
+        }
+
+
+        .menu-btn:hover {
+            color: var(--primary);
+
+            border-color: rgba(252,158,209,.4);
+
+            transform: translateY(-2px);
+        }
+
+
+        /* =====================================================
+           DRAWER
+        ===================================================== */
+
+        .drawer-overlay {
+            position: fixed;
+
+            inset: 0;
+
+            background: rgba(0,0,0,.6);
+
+            backdrop-filter: blur(5px);
+
+            z-index: 1500;
+
+            opacity: 0;
+
+            visibility: hidden;
+
+            transition: .3s;
+        }
+
+
+        .drawer-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+
+        .drawer {
+            position: fixed;
+
+            top: 0;
+            right: -360px;
+
+            width: min(360px, 88%);
+
+            height: 100%;
+
+            z-index: 1600;
+
+            background: rgba(14,14,22,.96);
+
+            backdrop-filter: blur(25px);
+
+            border-left: 1px solid var(--border);
+
+            padding: 25px;
+
+            transition: .4s cubic-bezier(.77,0,.18,1);
+
+            overflow-y: auto;
+        }
+
+
+        .drawer.active {
+            right: 0;
+        }
+
+
+        .drawer-head {
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            margin-bottom: 35px;
+        }
+
+
+        .drawer-logo {
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+
+            font-weight: 900;
+
+            font-size: 20px;
+        }
+
+
+        .drawer-logo img {
+            width: 42px;
+            height: 42px;
+
+            object-fit: cover;
+
+            border-radius: 50%;
+        }
+
+
+        .close-btn {
+            border: 0;
+
+            background: transparent;
+
+            color: #aaa;
+
+            font-size: 25px;
+
+            cursor: pointer;
+        }
+
+
+        .drawer-links {
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 9px;
+        }
+
+
+        .drawer-links a,
+        .drawer-links button {
+            border: 1px solid transparent;
+
+            background: transparent;
+
+            color: #ddd;
+
+            text-align: right;
+
+            padding: 15px;
+
+            border-radius: 15px;
+
+            cursor: pointer;
+
+            font-size: 15px;
+
+            transition: var(--transition);
+        }
+
+
+        .drawer-links a:hover,
+        .drawer-links button:hover {
+            background: rgba(252,158,209,.08);
+
+            border-color: rgba(252,158,209,.15);
+
+            color: var(--primary);
+        }
+
+
+        .drawer-links i {
+            width: 28px;
+        }
+
+
+        /* =====================================================
+           HERO
+        ===================================================== */
+
+        .hero {
+            min-height: 100vh;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            text-align: center;
+
+            padding: 110px 0 100px;
+        }
+
+
+        .hero-content {
+            max-width: 850px;
+        }
+
+
+        .hero-logo {
+            width: 115px;
+            height: 115px;
+
+            object-fit: cover;
+
+            border-radius: 32px;
+
+            border: 1px solid rgba(252,158,209,.25);
+
+            box-shadow:
+                0 0 60px rgba(252,158,209,.14),
+                var(--shadow);
+
+            margin-bottom: 25px;
+
+            animation: floating 5s ease-in-out infinite;
+        }
+
+
+        @keyframes floating {
+
+            0%,100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-9px);
+            }
+
+        }
+
+
+        .badge {
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 8px;
+
+            padding: 8px 15px;
+
+            border: 1px solid rgba(252,158,209,.2);
+
+            background: rgba(252,158,209,.06);
+
+            color: var(--primary);
+
+            border-radius: 50px;
+
+            font-size: 13px;
+
+            margin-bottom: 20px;
+        }
+
+
+        .badge::before {
+            content: "";
+
+            width: 7px;
+            height: 7px;
+
+            background: var(--primary);
+
+            border-radius: 50%;
+
+            box-shadow: 0 0 12px var(--primary);
+        }
+
+
+        .hero h1 {
+            font-size: clamp(42px, 8vw, 78px);
+
+            line-height: 1;
+
+            font-weight: 900;
+
+            margin-bottom: 18px;
+
+            letter-spacing: -3px;
+        }
+
+
+        .gradient-text {
+            background:
+                linear-gradient(
+                    100deg,
+                    #fff,
+                    var(--primary),
+                    #fff
+                );
+
+            background-size: 200%;
+
+            -webkit-background-clip: text;
+
+            background-clip: text;
+
+            color: transparent;
+
+            animation: gradientMove 5s linear infinite;
+        }
+
+
+        @keyframes gradientMove {
+
+            0% {
+                background-position: 0%;
+            }
+
+            100% {
+                background-position: 200%;
+            }
+
+        }
+
+
+        .job {
+            color: var(--primary);
+
+            font-weight: 600;
+
+            font-size: 17px;
+
+            margin-bottom: 22px;
+        }
+
+
+        .hero h2 {
+            font-size: clamp(25px, 5vw, 43px);
+
+            line-height: 1.5;
+
+            font-weight: 800;
+
+            margin-bottom: 18px;
+        }
+
+
+        .hero-description {
+            max-width: 650px;
+
+            margin: auto;
+
+            color: var(--muted);
+
+            line-height: 2;
+
+            font-size: 15px;
+        }
+
+
+        .hero-buttons {
+            margin-top: 30px;
+
+            display: flex;
+
+            justify-content: center;
+
+            flex-wrap: wrap;
+
+            gap: 12px;
+        }
+
+
+        .btn {
+            border: 1px solid var(--border);
+
+            padding: 13px 21px;
+
+            border-radius: 15px;
+
+            cursor: pointer;
+
+            display: inline-flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            gap: 9px;
+
+            transition: var(--transition);
+
+            font-size: 14px;
+        }
+
+
+        .btn-primary {
+            background: var(--primary);
+
+            color: #151016;
+
+            border-color: var(--primary);
+
+            font-weight: 800;
+
+            box-shadow:
+                0 10px 35px
+                rgba(252,158,209,.18);
+        }
+
+
+        .btn-primary:hover {
+            background: white;
+
+            transform: translateY(-3px);
+        }
+
+
+        .btn-secondary {
+            background: rgba(255,255,255,.045);
+
+            color: white;
+
+            backdrop-filter: blur(15px);
+        }
+
+
+        .btn-secondary:hover {
+            border-color: rgba(252,158,209,.4);
+
+            color: var(--primary);
+
+            transform: translateY(-3px);
+        }
+
+
+        .socials {
+            margin-top: 25px;
+
+            display: flex;
+
+            justify-content: center;
+
+            gap: 10px;
+        }
+
+
+        .social-icon {
+            width: 43px;
+            height: 43px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            border-radius: 14px;
+
+            border: 1px solid var(--border);
+
+            background: rgba(255,255,255,.04);
+
+            color: #bbb;
+
+            transition: var(--transition);
+        }
+
+
+        .social-icon:hover {
+            color: var(--primary);
+
+            border-color: rgba(252,158,209,.35);
+
+            transform: translateY(-4px);
+        }
+
+
+        /* =====================================================
+           SECTIONS
+        ===================================================== */
+
+        section {
+            padding: 90px 0;
+        }
+
+
+        .section-title {
+            text-align: center;
+
+            margin-bottom: 45px;
+        }
+
+
+        .section-title span {
+            color: var(--primary);
+
+            font-size: 13px;
+
+            font-weight: 700;
+        }
+
+
+        .section-title h2 {
+            font-size: clamp(28px, 5vw, 42px);
+
+            margin-top: 7px;
+        }
+
+
+        .section-title p {
+            color: var(--muted);
+
+            margin-top: 10px;
+
+            font-size: 14px;
+        }
+
+
+        .glass {
+            background: var(--card);
+
+            border: 1px solid var(--border);
+
+            backdrop-filter: blur(20px);
+
+            -webkit-backdrop-filter: blur(20px);
+
+            border-radius: var(--radius);
+
+            box-shadow: var(--shadow);
+        }
+
+
+        /* =====================================================
+           ABOUT
+        ===================================================== */
+
+        .about-card {
+            padding: 35px;
+
+            display: grid;
+
+            grid-template-columns:
+                90px
+                1fr
+                auto;
+
+            gap: 25px;
+
+            align-items: center;
+        }
+
+
+        .about-icon {
+            width: 90px;
+            height: 90px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            border-radius: 25px;
+
+            color: var(--primary);
+
+            font-size: 35px;
+
+            background: rgba(252,158,209,.08);
+
+            border:
+                1px solid
+                rgba(252,158,209,.13);
+        }
+
+
+        .about-card h3 {
+            margin-bottom: 8px;
+        }
+
+
+        .about-card p {
+            color: var(--muted);
+
+            line-height: 2;
+
+            font-size: 14px;
+        }
+
+
+        /* =====================================================
+           PORTFOLIO
+        ===================================================== */
+
+        .portfolio-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, 1fr);
+
+            gap: 18px;
+        }
+
+
+        .work-card {
+            position: relative;
+
+            aspect-ratio: 4 / 5;
+
+            overflow: hidden;
+
+            border-radius: 20px;
+
+            cursor: pointer;
+
+            border: 1px solid var(--border);
+
+            background: #111;
+        }
+
+
+        .work-card img {
+            width: 100%;
+            height: 100%;
+
+            object-fit: cover;
+
+            display: block;
+
+            transition:
+                .6s cubic-bezier(
+                    .2,.8,.2,1
+                );
+        }
+
+
+        .work-card::after {
+            content: "";
+
+            position: absolute;
+
+            inset: 0;
+
+            background:
+                linear-gradient(
+                    to top,
+                    rgba(0,0,0,.8),
+                    transparent 55%
+                );
+
+            opacity: 0;
+
+            transition: .3s;
+        }
+
+
+        .work-card:hover img {
+            transform: scale(1.06);
+        }
+
+
+        .work-card:hover::after {
+            opacity: 1;
+        }
+
+
+        .work-overlay {
+            position: absolute;
+
+            z-index: 2;
+
+            bottom: 18px;
+            right: 18px;
+            left: 18px;
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            opacity: 0;
+
+            transform: translateY(10px);
+
+            transition: .3s;
+
+            pointer-events: none;
+        }
+
+
+        .work-card:hover .work-overlay {
+            opacity: 1;
+
+            transform: translateY(0);
+        }
+
+
+        .work-overlay span {
+            font-weight: 700;
+        }
+
+
+        .zoom-icon {
+            width: 40px;
+            height: 40px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            border-radius: 12px;
+
+            background:
+                rgba(255,255,255,.12);
+
+            backdrop-filter: blur(10px);
+        }
+
+
+        .more-btn-wrapper {
+            text-align: center;
+
+            margin-top: 30px;
+        }
+
+
+        /* =====================================================
+           STATS
+        ===================================================== */
+
+        .stats {
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 15px;
+
+            margin-top: 35px;
+        }
+
+
+        .stat {
+            padding: 28px 15px;
+
+            text-align: center;
+        }
+
+
+        .stat i {
+            color: var(--primary);
+
+            font-size: 23px;
+
+            margin-bottom: 12px;
+        }
+
+
+        .stat strong {
+            display: block;
+
+            font-size: 27px;
+
+            margin-bottom: 4px;
+        }
+
+
+        .stat span {
+            color: var(--muted);
+
+            font-size: 13px;
+        }
+
+
+        /* =====================================================
+           ORDER
+        ===================================================== */
+
+        .order-card {
+            text-align: center;
+
+            padding: 45px 25px;
+        }
+
+
+        .order-card h2 {
+            font-size:
+                clamp(25px, 5vw, 38px);
+
+            margin-bottom: 12px;
+        }
+
+
+        .order-card p {
+            color: var(--muted);
+
+            line-height: 2;
+
+            max-width: 600px;
+
+            margin: auto;
+        }
+
+
+        .contact-buttons {
+            display: flex;
+
+            justify-content: center;
+
+            flex-wrap: wrap;
+
+            gap: 12px;
+
+            margin-top: 25px;
+        }
+
+
+        .contact-btn {
+            min-width: 170px;
+        }
+
+
+        /* =====================================================
+           SOCIAL
+        ===================================================== */
+
+        .social-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 15px;
+        }
+
+
+        .social-card {
+            padding: 25px;
+
+            text-align: center;
+
+            transition: var(--transition);
+        }
+
+
+        .social-card:hover {
+            transform: translateY(-5px);
+
+            background: var(--card-hover);
+        }
+
+
+        .social-card i {
+            font-size: 28px;
+
+            color: var(--primary);
+
+            margin-bottom: 12px;
+        }
+
+
+        .social-card h3 {
+            font-size: 16px;
+
+            margin-bottom: 5px;
+        }
+
+
+        .social-card p {
+            color: var(--muted);
+
+            font-size: 12px;
+        }
+
+
+        /* =====================================================
+           FAQ
+        ===================================================== */
+
+        .faq-list {
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 10px;
+        }
+
+
+        .faq-item {
+            overflow: hidden;
+        }
+
+
+        .faq-question {
+            width: 100%;
+
+            padding: 19px;
+
+            border: 0;
+
+            background: transparent;
+
+            color: white;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            cursor: pointer;
+
+            text-align: right;
+
+            font-size: 14px;
+        }
+
+
+        .faq-question i {
+            transition: .3s;
+
+            color: var(--primary);
+        }
+
+
+        .faq-answer {
+            max-height: 0;
+
+            overflow: hidden;
+
+            transition: .35s;
+        }
+
+
+        .faq-answer p {
+            padding: 0 19px 19px;
+
+            color: var(--muted);
+
+            line-height: 2;
+
+            font-size: 13px;
+        }
+
+
+        .faq-item.active
+        .faq-answer {
+            max-height: 250px;
+        }
+
+
+        .faq-item.active
+        .faq-question i {
+            transform: rotate(180deg);
+        }
+
+
+        /* =====================================================
+           FOOTER
+        ===================================================== */
+
+        footer {
+            padding: 55px 0 120px;
+
+            border-top:
+                1px solid
+                rgba(255,255,255,.06);
+
+            margin-top: 50px;
+        }
+
+
+        .footer-grid {
+            display: grid;
+
+            grid-template-columns:
+                1.5fr
+                1fr
+                1fr;
+
+            gap: 35px;
+        }
+
+
+        .footer-brand {
+            color: var(--muted);
+
+            line-height: 2;
+
+            font-size: 13px;
+
+            max-width: 360px;
+        }
+
+
+        .footer-brand h3 {
+            color: white;
+
+            font-size: 22px;
+
+            margin-bottom: 10px;
+        }
+
+
+        footer h4 {
+            margin-bottom: 15px;
+        }
+
+
+        .footer-links {
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 9px;
+
+            color: var(--muted);
+
+            font-size: 13px;
+        }
+
+
+        .footer-links a:hover {
+            color: var(--primary);
+        }
+
+
+        .footer-socials {
+            display: flex;
+
+            flex-wrap: wrap;
+
+            gap: 8px;
+        }
+
+
+        .copyright {
+            text-align: center;
+
+            color: #666;
+
+            border-top:
+                1px solid
+                rgba(255,255,255,.06);
+
+            margin-top: 40px;
+
+            padding-top: 25px;
+
+            font-size: 12px;
+        }
+
+
+        /* =====================================================
+           FLOATING NAVIGATION
+        ===================================================== */
+
+        .floating-nav {
+            position: fixed;
+
+            z-index: 1200;
+
+            bottom: 18px;
+
+            left: 50%;
+
+            transform:
+                translateX(-50%);
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 5px;
+
+            padding: 7px;
+
+            border: 1px solid var(--border);
+
+            background:
+                rgba(10,10,15,.75);
+
+            backdrop-filter: blur(20px);
+
+            border-radius: 20px;
+
+            box-shadow:
+                0 15px 50px
+                rgba(0,0,0,.5);
+        }
+
+
+        .floating-nav button {
+            width: 45px;
+            height: 45px;
+
+            border: 0;
+
+            border-radius: 14px;
+
+            color: #aaa;
+
+            background: transparent;
+
+            cursor: pointer;
+
+            transition: .25s;
+        }
+
+
+        .floating-nav button:hover {
+            color: #111;
+
+            background: var(--primary);
+        }
+
+
+        .language-btn {
+            font-weight: 800;
+
+            font-size: 12px !important;
+        }
+
+
+        /* =====================================================
+           BACK TO TOP
+        ===================================================== */
+
+        .back-top {
+            position: fixed;
+
+            z-index: 1100;
+
+            left: 20px;
+
+            bottom: 25px;
+
+            width: 45px;
+            height: 45px;
+
+            border: 1px solid var(--border);
+
+            border-radius: 14px;
+
+            background:
+                rgba(10,10,15,.75);
+
+            color: white;
+
+            backdrop-filter: blur(15px);
+
+            cursor: pointer;
+
+            opacity: 0;
+
+            visibility: hidden;
+
+            transform:
+                translateY(15px);
+
+            transition: .3s;
+        }
+
+
+        .back-top.show {
+            opacity: 1;
+
+            visibility: visible;
+
+            transform:
+                translateY(0);
+        }
+
+
+        .back-top:hover {
+            color: var(--primary);
+
+            border-color:
+                rgba(252,158,209,.4);
+        }
+
+
+        /* =====================================================
+           MODALS
+        ===================================================== */
+
+        .modal {
+            position: fixed;
+
+            inset: 0;
+
+            z-index: 2000;
+
+            background:
+                rgba(0,0,0,.8);
+
+            backdrop-filter: blur(10px);
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            padding: 20px;
+
+            opacity: 0;
+
+            visibility: hidden;
+
+            pointer-events: none;
+
+            transition: .3s;
+        }
+
+
+        .modal.active {
+            opacity: 1;
+
+            visibility: visible;
+
+            pointer-events: auto;
+        }
+
+
+        .modal-content {
+            width: min(800px, 100%);
+
+            max-height: 90vh;
+
+            overflow-y: auto;
+
+            position: relative;
+
+            background:
+                rgba(16,16,24,.96);
+
+            border: 1px solid var(--border);
+
+            border-radius: 25px;
+
+            box-shadow:
+                0 30px 100px
+                rgba(0,0,0,.7);
+
+            transform:
+                scale(.94)
+                translateY(15px);
+
+            transition: .3s;
+        }
+
+
+        .modal.active
+        .modal-content {
+            transform:
+                scale(1)
+                translateY(0);
+        }
+
+
+        .modal-close {
+            position: absolute;
+
+            z-index: 5;
+
+            top: 15px;
+            left: 15px;
+
+            width: 42px;
+            height: 42px;
+
+            border: 1px solid var(--border);
+
+            background:
+                rgba(0,0,0,.5);
+
+            color: white;
+
+            border-radius: 13px;
+
+            cursor: pointer;
+
+            backdrop-filter: blur(10px);
+        }
+
+
+        .modal-close:hover {
+            color: var(--primary);
+        }
+
+
+        .image-modal-content {
+            background: #08080d;
+
+            overflow: hidden;
+        }
+
+
+        .image-modal-content img {
+            width: 100%;
+
+            max-height: 75vh;
+
+            object-fit: contain;
+
+            display: block;
+        }
+
+
+        .image-actions {
+            padding: 15px;
+
+            display: flex;
+
+            justify-content: center;
+
+            flex-wrap: wrap;
+
+            gap: 10px;
+        }
+
+
+        .text-modal {
+            padding:
+                40px
+                30px
+                30px;
+        }
+
+
+        .text-modal h2 {
+            font-size: 28px;
+
+            margin-bottom: 20px;
+        }
+
+
+        .text-modal p {
+            color: var(--muted);
+
+            line-height: 2.1;
+
+            font-size: 14px;
+
+            margin-bottom: 15px;
+        }
+
+
+        .highlight {
+            color: var(--primary);
+
+            font-weight: 700;
+        }
+
+
+        .more-grid {
+            padding: 25px;
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 12px;
+        }
+
+
+        .more-grid
+        .work-card {
+            border-radius: 15px;
+        }
+
+
+        /* =====================================================
+           REVEAL
+        ===================================================== */
+
+        .reveal {
+            opacity: 0;
+
+            transform:
+                translateY(30px);
+
+            transition:
+                .7s ease;
+        }
+
+
+        .reveal.visible {
+            opacity: 1;
+
+            transform:
+                translateY(0);
+        }
+
+
+        /* =====================================================
+           ENGLISH MODE
+        ===================================================== */
+
+        html[dir="ltr"]
+        body {
+            text-align: left;
+        }
+
+
+        html[dir="ltr"]
+        .drawer-links a,
+        html[dir="ltr"]
+        .drawer-links button,
+        html[dir="ltr"]
+        .faq-question {
+            text-align: left;
+        }
+
+
+        html[dir="ltr"]
+        .drawer {
+            right: auto;
+
+            left: -360px;
+
+            border-left: 0;
+
+            border-right:
+                1px solid var(--border);
+        }
+
+
+        html[dir="ltr"]
+        .drawer.active {
+            left: 0;
+        }
+
+
+        html[dir="ltr"]
+        .back-top {
+            left: auto;
+
+            right: 20px;
+        }
+
+
+        /* =====================================================
+           RESPONSIVE
+        ===================================================== */
+
+        @media (max-width: 800px) {
+
+            .about-card {
+                grid-template-columns:
+                    70px
+                    1fr;
+            }
+
+
+            .about-icon {
+                width: 70px;
+                height: 70px;
+
+                font-size: 27px;
+            }
+
+
+            .about-card .btn {
+                grid-column:
+                    1 / -1;
+            }
+
+
+            .footer-grid {
+                grid-template-columns:
+                    1fr
+                    1fr;
+            }
+
+
+            .footer-brand {
+                grid-column:
+                    1 / -1;
+            }
+
+        }
+
+
+        @media (max-width: 600px) {
+
+            section {
+                padding: 65px 0;
+            }
+
+
+            .hero {
+                padding-top: 120px;
+            }
+
+
+            .hero-logo {
+                width: 95px;
+                height: 95px;
+            }
+
+
+            .hero h1 {
+                letter-spacing: -2px;
+            }
+
+
+            .hero h2 {
+                font-size: 25px;
+            }
+
+
+            .hero-description {
+                font-size: 13px;
+            }
+
+
+            .portfolio-grid {
+                gap: 10px;
+            }
+
+
+            .work-card {
+                border-radius: 15px;
+            }
+
+
+            .work-overlay {
+                opacity: 1;
+
+                transform: none;
+            }
+
+
+            .stats {
+                grid-template-columns:
+                    1fr;
+            }
+
+
+            .social-grid {
+                grid-template-columns:
+                    1fr;
+            }
+
+
+            .footer-grid {
+                grid-template-columns:
+                    1fr;
+            }
+
+
+            .more-grid {
+                grid-template-columns:
+                    repeat(2, 1fr);
+
+                padding: 15px;
+            }
+
+
+            .floating-nav {
+                bottom: 12px;
+            }
+
+
+            .floating-nav button {
+                width: 42px;
+                height: 42px;
+            }
+
+
+            .back-top {
+                bottom: 80px;
+            }
+
+
+            .drawer {
+                width: 88%;
+            }
+
+        }
+
+    </style>
+</head>
+
+<body>
+
+
+<!-- ============================================================
+     راهنمای تغییر تصاویر
+
+     لوگو:
+     logo.png
+
+     نمونه‌کارهای اصلی:
+     portfolio/work1.jpg
+     portfolio/work2.jpg
+     portfolio/work3.jpg
+     portfolio/work4.jpg
+
+     نمونه‌کارهای بیشتر:
+     portfolio/more1.jpg
+     تا
+     portfolio/more11.jpg
+
+     برای اضافه کردن عکس جدید:
+
+     1. عکس را داخل پوشه portfolio قرار بده.
+     2. مسیر عکس را در بخش JAVASCRIPT پایین فایل
+        داخل portfolioWorks یا moreWorks اضافه کن.
+
+     مثال:
+
+     "portfolio/work5.jpg"
+
+     فرمت پیشنهادی:
+
+     JPG
+     PNG
+     WEBP
+============================================================ -->
+
+
+<!-- ================= HEADER ================= -->
+
+<header>
+
+    <div class="topbar">
+
+        <a href="#home"
+           class="brand-mini">
+
+            <img src="logo.png"
+                 alt="Ekranoo">
+
+            <span>Ekranoo</span>
+
+        </a>
+
+
+        <button class="menu-btn"
+                id="menuBtn"
+                aria-label="Menu">
+
+            <i class="fa-solid fa-bars"></i>
+
+        </button>
+
+    </div>
+
+</header>
+
+
+<!-- ================= DRAWER ================= -->
+
+<div class="drawer-overlay"
+     id="drawerOverlay">
+</div>
+
+
+<aside class="drawer"
+       id="drawer">
+
+
+    <div class="drawer-head">
+
+        <div class="drawer-logo">
+
+            <img src="logo.png"
+                 alt="Ekranoo">
+
+            Ekranoo
+
+        </div>
+
+
+        <button class="close-btn"
+                id="drawerClose">
+
+            <i class="fa-solid fa-xmark"></i>
+
+        </button>
+
+    </div>
+
+
+    <nav class="drawer-links">
+
+
+        <a href="#home"
+           data-close-drawer>
+
+            <i class="fa-solid fa-house"></i>
+
+            <span data-fa="خانه"
+                  data-en="Home">
+
+                خانه
+
+            </span>
+
+        </a>
+
+
+        <a href="#about"
+           data-close-drawer>
+
+            <i class="fa-solid fa-user"></i>
+
+            <span data-fa="درباره من"
+                  data-en="About Me">
+
+                درباره من
+
+            </span>
+
+        </a>
+
+
+        <a href="#portfolio"
+           data-close-drawer>
+
+            <i class="fa-solid fa-images"></i>
+
+            <span data-fa="نمونه‌کارها"
+                  data-en="Portfolio">
+
+                نمونه‌کارها
+
+            </span>
+
+        </a>
+
+
+        <a href="#order"
+           data-close-drawer>
+
+            <i class="fa-solid fa-palette"></i>
+
+            <span data-fa="سفارش طراحی"
+                  data-en="Order Design">
+
+                سفارش طراحی
+
+            </span>
+
+        </a>
+
+
+        <button onclick="openModal('faqModal')">
+
+            <i class="fa-solid fa-circle-question"></i>
+
+            <span data-fa="سوالات متداول"
+                  data-en="FAQ">
+
+                سوالات متداول
+
+            </span>
+
+        </button>
+
+
+        <button id="drawerLanguageBtn">
+
+            <i class="fa-solid fa-language"></i>
+
+            <span data-fa="English"
+                  data-en="فارسی">
+
+                English
+
+            </span>
+
+        </button>
+
+
+    </nav>
+
+</aside>
+
+
+<!-- ================= HERO ================= -->
+
+<main>
+
+
+<section class="hero"
+         id="home">
+
+
+    <div class="container hero-content reveal">
+
+
+        <img src="logo.png"
+             alt="Ekranoo Logo"
+             class="hero-logo">
+
+
+        <div class="badge">
+
+            <span data-fa="نمونه‌کارهای دیجیتال"
+                  data-en="Digital Portfolio">
+
+                نمونه‌کارهای دیجیتال
+
+            </span>
+
+        </div>
+
+
+        <h1>
+
+            <span class="gradient-text">
+                Ekranoo
+            </span>
+
+        </h1>
+
+
+        <div class="job"
+             data-fa="طراح گرافیک | تدوینگر"
+             data-en="Graphic Designer | Video Editor">
+
+            طراح گرافیک | تدوینگر
+
+        </div>
+
+
+        <h2 data-fa="اینجا قراره طرح‌ها فقط قشنگ نباشن؛ دیده بشن"
+            data-en="Here, designs aren't just beautiful; they're meant to be seen.">
+
+            اینجا قراره طرح‌ها فقط قشنگ نباشن؛ دیده بشن
+
+        </h2>
+
+
+        <p class="hero-description"
+           data-fa="ایده‌ها رو به تصویر تبدیل می‌کنم؛ از طراحی گرافیک و پوستر تا تدوین و محتوای بصری."
+           data-en="I turn ideas into visuals — from graphic design and posters to video editing and visual content.">
+
+            ایده‌ها رو به تصویر تبدیل می‌کنم؛ از طراحی گرافیک و پوستر تا تدوین و محتوای بصری.
+
+        </p>
+
+
+        <div class="hero-buttons">
+
+
+            <a href="#order"
+               class="btn btn-primary">
+
+                <i class="fa-solid fa-wand-magic-sparkles"></i>
+
+                <span data-fa="سفارش طراحی"
+                      data-en="Order Design">
+
+                    سفارش طراحی
+
+                </span>
+
+            </a>
+
+
+            <a href="#portfolio"
+               class="btn btn-secondary">
+
+                <i class="fa-solid fa-images"></i>
+
+                <span data-fa="مشاهده نمونه‌کارها"
+                      data-en="View Portfolio">
+
+                    مشاهده نمونه‌کارها
+
+                </span>
+
+            </a>
+
+
+        </div>
+
+
+        <div class="socials">
+
+
+            <a href="https://eitaa.com/Ekranoo"
+               target="_blank"
+               class="social-icon">
+
+                <i class="fa-solid fa-paper-plane"></i>
+
+            </a>
+
+
+            <a href="https://t.me/ekrano1"
+               target="_blank"
+               class="social-icon">
+
+                <i class="fa-brands fa-telegram"></i>
+
+            </a>
+
+
+            <a href="https://www.instagram.com/ekranoo?igsi=MW1mY3M0ZGt0dHJ5Yg=="
+               target="_blank"
+               class="social-icon">
+
+                <i class="fa-brands fa-instagram"></i>
+
+            </a>
+
+
+        </div>
+
+
+    </div>
+
+
+</section>
+
+
+<!-- ================= ABOUT ================= -->
+
+<section id="about">
+
+
+    <div class="container">
+
+
+        <div class="section-title reveal">
+
+
+            <span data-fa="آشنایی بیشتر"
+                  data-en="GET TO KNOW ME">
+
+                آشنایی بیشتر
+
+            </span>
+
+
+            <h2 data-fa="درباره من"
+                data-en="About Me">
+
+                درباره من
+
+            </h2>
+
+
+        </div>
+
+
+        <div class="about-card glass reveal">
+
+
+            <div class="about-icon">
+
+                <i class="fa-solid fa-pen-nib"></i>
+
+            </div>
+
+
+            <div>
+
+
+                <h3>Ekranoo</h3>
+
+
+                <p data-fa="طراح گرافیک و تدوینگر؛ عاشق ساختن چیزهایی که فقط دیده نمی‌شن، بلکه توی ذهن می‌مونن."
+                   data-en="A graphic designer and video editor who loves creating things that aren't just seen, but remembered.">
+
+                    طراح گرافیک و تدوینگر؛ عاشق ساختن چیزهایی که فقط دیده نمی‌شن، بلکه توی ذهن می‌مونن.
+
+                </p>
+
+
+            </div>
+
+
+            <button class="btn btn-secondary"
+                    onclick="openModal('aboutModal')">
+
+
+                <span data-fa="بیشتر"
+                      data-en="More">
+
+                    بیشتر
+
+                </span>
+
+
+                <i class="fa-solid fa-arrow-left"></i>
+
+
+            </button>
+
+
+        </div>
+
+
+    </div>
+
+
+</section>
+
+
+<!-- ================= PORTFOLIO ================= -->
+
+<section id="portfolio">
+
+
+    <div class="container">
+
+
+        <div class="section-title reveal">
+
+
+            <span data-fa="پروژه‌ها"
+                  data-en="MY WORK">
+
+                پروژه‌ها
+
+            </span>
+
+
+            <h2 data-fa="نمونه‌کارها"
+                data-en="Portfolio">
+
+                نمونه‌کارها
+
+            </h2>
+
+
+            <p data-fa="بخشی از پروژه‌هایی که ساخته‌ام"
+               data-en="A selection of projects I've created">
+
+                بخشی از پروژه‌هایی که ساخته‌ام
+
+            </p>
+
+
+        </div>
+
+
+        <div class="portfolio-grid"
+             id="portfolioGrid">
+
+            <!-- JS تصاویر را اینجا قرار می‌دهد -->
+
+        </div>
+
+
+        <div class="more-btn-wrapper reveal">
+
+
+            <button class="btn btn-primary"
+                    onclick="openModal('moreModal')">
+
+
+                <i class="fa-solid fa-plus"></i>
+
+
+                <span data-fa="مشاهده بیشتر"
+                      data-en="View More">
+
+                    مشاهده بیشتر
+
+                </span>
+
+
+            </button>
+
+
+        </div>
+
+
+        <div class="stats">
+
+
+            <div class="stat glass reveal">
+
+                <i class="fa-solid fa-calendar-days"></i>
+
+                <strong>2+</strong>
+
+                <span data-fa="سال تجربه"
+                      data-en="Years Experience">
+
+                    سال تجربه
+
+                </span>
+
+            </div>
+
+
+            <div class="stat glass reveal">
+
+                <i class="fa-solid fa-layer-group"></i>
+
+                <strong>∞</strong>
+
+                <span data-fa="ایده و پروژه"
+                      data-en="Ideas & Projects">
+
+                    ایده و پروژه
+
+                </span>
+
+            </div>
+
+
+            <div class="stat glass reveal">
+
+                <i class="fa-solid fa-bolt"></i>
+
+                <strong>100%</strong>
+
+                <span data-fa="تمرکز روی جزئیات"
+                      data-en="Focus on Details">
+
+                    تمرکز روی جزئیات
+
+                </span>
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+</section>
+
+
+<!-- ================= ORDER ================= -->
+
+<section id="order">
+
+
+    <div class="container">
+
+
+        <div class="order-card glass reveal">
+
+
+            <div class="section-title"
+                 style="margin-bottom:0;">
+
+
+                <span data-fa="شروع یک پروژه"
+                      data-en="START A PROJECT">
+
+                    شروع یک پروژه
+
+                </span>
+
+
+                <h2 data-fa="یه طرح خفن لازم داری؟"
+                    data-en="Need a great design?">
+
+                    یه طرح خفن لازم داری؟
+
+                </h2>
+
+
+                <p data-fa="برای سفارش طراحی یا همکاری، از طریق یکی از راه‌های ارتباطی زیر پیام بده."
+                   data-en="For design orders or collaborations, send me a message through one of the channels below.">
+
+                    برای سفارش طراحی یا همکاری، از طریق یکی از راه‌های ارتباطی زیر پیام بده.
+
+                </p>
+
+
+            </div>
+
+
+            <div class="contact-buttons">
+
+
+                <a href="https://eitaa.com/Ekrano"
+                   target="_blank"
+                   class="btn btn-primary contact-btn">
+
+
+                    <i class="fa-solid fa-paper-plane"></i>
+
+
+                    <span data-fa="ارتباط در ایتا"
+                          data-en="Contact on Eitaa">
+
+                        ارتباط در ایتا
+
+                    </span>
+
+
+                </a>
+
+
+                <a href="https://t.me/Ekranoo"
+                   target="_blank"
+                   class="btn btn-secondary contact-btn">
+
+
+                    <i class="fa-brands fa-telegram"></i>
+
+
+                    <span data-fa="ارتباط در تلگرام"
+                          data-en="Contact on Telegram">
+
+                        ارتباط در تلگرام
+
+                    </span>
+
+
+                </a>
+
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+</section>
+
+
+<!-- ================= SOCIAL ================= -->
+
+<section>
+
+
+    <div class="container">
+
+
+        <div class="section-title reveal">
+
+
+            <span data-fa="من را دنبال کن"
+                  data-en="FOLLOW ME">
+
+                من را دنبال کن
+
+            </span>
+
+
+            <h2 data-fa="شبکه‌های اجتماعی"
+                data-en="Social Media">
+
+                شبکه‌های اجتماعی
+
+            </h2>
+
+
+        </div>
+
+
+        <div class="social-grid">
+
+
+            <a href="https://eitaa.com/Ekranoo"
+               target="_blank"
+               class="social-card glass reveal">
+
+
+                <i class="fa-solid fa-paper-plane"></i>
+
+                <h3>ایتا</h3>
+
+                <p>@Ekranoo</p>
+
+
+            </a>
+
+
+            <a href="https://t.me/ekrano1"
+               target="_blank"
+               class="social-card glass reveal">
+
+
+                <i class="fa-brands fa-telegram"></i>
+
+                <h3>Telegram</h3>
+
+                <p>@ekrano1</p>
+
+
+            </a>
+
+
+            <a href="https://www.instagram.com/ekranoo?igsi=MW1mY3M0ZGt0dHJ5Yg=="
+               target="_blank"
+               class="social-card glass reveal">
+
+
+                <i class="fa-brands fa-instagram"></i>
+
+                <h3>Instagram</h3>
+
+                <p>@ekranoo</p>
+
+
+            </a>
+
+
+        </div>
+
+
+    </div>
+
+
+</section>
+
+
+<!-- ================= FAQ ================= -->
+
+<section>
+
+
+    <div class="container">
+
+
+        <div class="section-title reveal">
+
+
+            <span>FAQ</span>
+
+
+            <h2 data-fa="سوالات متداول"
+                data-en="Frequently Asked Questions">
+
+                سوالات متداول
+
+            </h2>
+
+
+        </div>
+
+
+        <div class="faq-list">
+
+
+            <div class="faq-item glass reveal">
+
+
+                <button class="faq-question">
+
+
+                    <span data-fa="چه خدماتی ارائه می‌دی؟"
+                          data-en="What services do you offer?">
+
+                        چه خدماتی ارائه می‌دی؟
+
+                    </span>
+
+
+                    <i class="fa-solid fa-chevron-down"></i>
+
+
+                </button>
+
+
+                <div class="faq-answer">
+
+
+                    <p data-fa="طراحی پوستر، پست و استوری، طراحی گرافیکی، محتوای بصری و تدوین ویدیو از خدمات اصلی من هستند."
+                       data-en="My main services include posters, social media designs, graphic design, visual content and video editing.">
+
+                        طراحی پوستر، پست و استوری، طراحی گرافیکی، محتوای بصری و تدوین ویدیو از خدمات اصلی من هستند.
+
+                    </p>
+
+
+                </div>
+
+
+            </div>
+
+
+            <div class="faq-item glass reveal">
+
+
+                <button class="faq-question">
+
+
+                    <span data-fa="چطور سفارش ثبت کنم؟"
+                          data-en="How can I place an order?">
+
+                        چطور سفارش ثبت کنم؟
+
+                    </span>
+
+
+                    <i class="fa-solid fa-chevron-down"></i>
+
+
+                </button>
+
+
+                <div class="faq-answer">
+
+
+                    <p data-fa="کافیه از طریق ایتا یا تلگرام پیام بدی و جزئیات پروژه‌ات رو توضیح بدی."
+                       data-en="Simply message me on Eitaa or Telegram and tell me about your project.">
+
+                        کافیه از طریق ایتا یا تلگرام پیام بدی و جزئیات پروژه‌ات رو توضیح بدی.
+
+                    </p>
+
+
+                </div>
+
+
+            </div>
+
+
+            <div class="faq-item glass reveal">
+
+
+                <button class="faq-question">
+
+
+                    <span data-fa="مدت زمان آماده شدن پروژه چقدره؟"
+                          data-en="How long does a project take?">
+
+                        مدت زمان آماده شدن پروژه چقدره؟
+
+                    </span>
+
+
+                    <i class="fa-solid fa-chevron-down"></i>
+
+
+                </button>
+
+
+                <div class="faq-answer">
+
+
+                    <p data-fa="زمان انجام پروژه به نوع و حجم کار بستگی داره و قبل از شروع، زمان تقریبی هماهنگ می‌شه."
+                       data-en="The delivery time depends on the type and scope of the project and will be discussed before starting.">
+
+                        زمان انجام پروژه به نوع و حجم کار بستگی داره و قبل از شروع، زمان تقریبی هماهنگ می‌شه.
+
+                    </p>
+
+
+                </div>
+
+
+            </div>
+
+
+            <div class="faq-item glass reveal">
+
+
+                <button class="faq-question">
+
+
+                    <span data-fa="آیا امکان اصلاح طرح وجود دارد؟"
+                          data-en="Are revisions possible?">
+
+                        آیا امکان اصلاح طرح وجود دارد؟
+
+                    </span>
+
+
+                    <i class="fa-solid fa-chevron-down"></i>
+
+
+                </button>
+
+
+                <div class="faq-answer">
+
+
+                    <p data-fa="بله، جزئیات اصلاحات قبل از شروع پروژه مشخص می‌شه تا روند کار واضح باشه."
+                       data-en="Yes. Revision details are discussed before starting so the workflow stays clear.">
+
+                        بله، جزئیات اصلاحات قبل از شروع پروژه مشخص می‌شه تا روند کار واضح باشه.
+
+                    </p>
+
+
+                </div>
+
+
+            </div>
+
+
+            <div class="faq-item glass reveal">
+
+
+                <button class="faq-question">
+
+
+                    <span data-fa="فایل نهایی با چه فرمتی تحویل داده می‌شود؟"
+                          data-en="Which formats are the final files delivered in?">
+
+                        فایل نهایی با چه فرمتی تحویل داده می‌شود؟
+
+                    </span>
+
+
+                    <i class="fa-solid fa-chevron-down"></i>
+
+
+                </button>
+
+
+                <div class="faq-answer">
+
+
+                    <p data-fa="فرمت خروجی بر اساس نوع پروژه انتخاب می‌شه؛ برای مثال JPG، PNG، PDF یا فرمت‌های ویدیویی."
+                       data-en="The final format depends on the project, such as JPG, PNG, PDF or video formats.">
+
+                        فرمت خروجی بر اساس نوع پروژه انتخاب می‌شه؛ برای مثال JPG، PNG، PDF یا فرمت‌های ویدیویی.
+
+                    </p>
+
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+</section>
+
+
+</main>
+
+
+<!-- ================= FOOTER ================= -->
+
+<footer>
+
+
+    <div class="container">
+
+
+        <div class="footer-grid">
+
+
+            <div class="footer-brand">
+
+
+                <h3>Ekranoo</h3>
+
+
+                <p data-fa="طراح گرافیک و تدوینگر؛ جایی برای تبدیل ایده‌ها به تصویر."
+                   data-en="Graphic designer and video editor — turning ideas into visuals.">
+
+                    طراح گرافیک و تدوینگر؛ جایی برای تبدیل ایده‌ها به تصویر.
+
+                </p>
+
+
+            </div>
+
+
+            <div>
+
+
+                <h4 data-fa="دسترسی سریع"
+                    data-en="Quick Links">
+
+                    دسترسی سریع
+
+                </h4>
+
+
+                <div class="footer-links">
+
+
+                    <a href="#home"
+                       data-fa="خانه"
+                       data-en="Home">
+
+                        خانه
+
+                    </a>
+
+
+                    <a href="#about"
+                       data-fa="درباره من"
+                       data-en="About">
+
+                        درباره من
+
+                    </a>
+
+
+                    <a href="#portfolio"
+                       data-fa="نمونه‌کارها"
+                       data-en="Portfolio">
+
+                        نمونه‌کارها
+
+                    </a>
+
+
+                    <a href="#order"
+                       data-fa="سفارش طراحی"
+                       data-en="Order Design">
+
+                        سفارش طراحی
+
+                    </a>
+
+
+                    <a href="#"
+                       onclick="openModal('faqModal'); return false;"
+                       data-fa="سوالات متداول"
+                       data-en="FAQ">
+
+                        سوالات متداول
+
+                    </a>
+
+
+                </div>
+
+
+            </div>
+
+
+            <div>
+
+
+                <h4 data-fa="شبکه‌های اجتماعی"
+                    data-en="Social Media">
+
+                    شبکه‌های اجتماعی
+
+                </h4>
+
+
+                <div class="footer-socials">
+
+
+                    <a href="https://eitaa.com/Ekranoo"
+                       target="_blank"
+                       class="social-icon">
+
+                        <i class="fa-solid fa-paper-plane"></i>
+
+                    </a>
+
+
+                    <a href="https://t.me/ekrano1"
+                       target="_blank"
+                       class="social-icon">
+
+                        <i class="fa-brands fa-telegram"></i>
+
+                    </a>
+
+
+                    <a href="https://www.instagram.com/ekranoo?igsi=MW1mY3M0ZGt0dHJ5Yg=="
+                       target="_blank"
+                       class="social-icon">
+
+                        <i class="fa-brands fa-instagram"></i>
+
+                    </a>
+
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+        <div class="copyright">
+
+            © 2026 Ekranoo —
+
+            <span data-fa="تمام حقوق محفوظ است."
+                  data-en="All rights reserved.">
+
+                تمام حقوق محفوظ است.
+
+            </span>
+
+        </div>
+
+
+    </div>
+
+
+</footer>
+
+
+<!-- ================= ABOUT MODAL ================= -->
+
+<div class="modal"
+     id="aboutModal">
+
+
+    <div class="modal-content text-modal">
+
+
+        <button class="modal-close"
+                onclick="closeAllModals()">
+
+            <i class="fa-solid fa-xmark"></i>
+
+        </button>
+
+
+        <h2 data-fa="درباره Ekranoo"
+            data-en="About Ekranoo">
+
+            درباره Ekranoo
+
+        </h2>
+
+
+        <p data-fa="من Ekranoo هستم؛ یک طراح گرافیک و تدوینگر که علاقه‌مندم ایده‌های ساده رو به خروجی‌های متفاوت و چشمگیر تبدیل کنم."
+           data-en="I'm Ekranoo, a graphic designer and video editor who enjoys turning simple ideas into distinctive and eye-catching visuals.">
+
+            من Ekranoo هستم؛ یک طراح گرافیک و تدوینگر که علاقه‌مندم ایده‌های ساده رو به خروجی‌های متفاوت و چشمگیر تبدیل کنم.
+
+        </p>
+
+
+        <p data-fa="تمرکزم روی طراحی‌هایی هست که علاوه بر ظاهر جذاب، هدف مشخصی داشته باشن و بتونن توجه مخاطب رو جلب کنن."
+           data-en="My focus is on designs that are not only visually attractive but also have a clear purpose and can capture the audience's attention.">
+
+            تمرکزم روی طراحی‌هایی هست که علاوه بر ظاهر جذاب، هدف مشخصی داشته باشن و بتونن توجه مخاطب رو جلب کنن.
+
+        </p>
+
+
+        <p>
+
+            <span class="highlight"
+                  data-fa="طراحی خوب فقط قشنگ نیست؛ باید دیده بشه."
+                  data-en="Good design isn't just beautiful; it should be seen.">
+
+                طراحی خوب فقط قشنگ نیست؛ باید دیده بشه.
+
+            </span>
+
+        </p>
+
+
+    </div>
+
+
+</div>
+
+
+<!-- ================= FAQ MODAL ================= -->
+
+<div class="modal"
+     id="faqModal">
+
+
+    <div class="modal-content text-modal">
+
+
+        <button class="modal-close"
+                onclick="closeAllModals()">
+
+            <i class="fa-solid fa-xmark"></i>
+
+        </button>
+
+
+        <h2 data-fa="سوالات متداول"
+            data-en="Frequently Asked Questions">
+
+            سوالات متداول
+
+        </h2>
+
+
+        <div class="faq-list">
+
+
+            <div class="faq-item glass">
+
+
+                <button class="faq-question">
+
+
+                    <span data-fa="آیا طراحی اختصاصی انجام می‌دی؟"
+                          data-en="Do you create custom designs?">
+
+                        آیا طراحی اختصاصی انجام می‌دی؟
+
+                    </span>
+
+
+                    <i class="fa-solid fa-chevron-down"></i>
+
+
+                </button>
+
+
+                <div class="faq-answer">
+
+
+                    <p data-fa="بله، طراحی‌ها بر اساس نیاز و سبک مورد نظر پروژه انجام می‌شن."
+                       data-en="Yes, designs are created according to the project's needs and desired style.">
+
+                        بله، طراحی‌ها بر اساس نیاز و سبک مورد نظر پروژه انجام می‌شن.
+
+                    </p>
+
+
+                </div>
+
+
+            </div>
+
+
+            <div class="faq-item glass">
+
+
+                <button class="faq-question">
+
+
+                    <span data-fa="چطور سفارش بدم؟"
+                          data-en="How do I order?">
+
+                        چطور سفارش بدم؟
+
+                    </span>
+
+
+                    <i class="fa-solid fa-chevron-down"></i>
+
+
+                </button>
+
+
+                <div class="faq-answer">
+
+
+                    <p data-fa="از طریق ایتا یا تلگرام پیام بده."
+                       data-en="Send me a message through Eitaa or Telegram.">
+
+                        از طریق ایتا یا تلگرام پیام بده.
+
+                    </p>
+
+
+                </div>
+
+
+            </div>
+
+
+            <div class="faq-item glass">
+
+
+                <button class="faq-question">
+
+
+                    <span data-fa="آیا تدوین ویدیو هم انجام می‌دی؟"
+                          data-en="Do you edit videos too?">
+
+                        آیا تدوین ویدیو هم انجام می‌دی؟
+
+                    </span>
+
+
+                    <i class="fa-solid fa-chevron-down"></i>
+
+
+                </button>
+
+
+                <div class="faq-answer">
+
+
+                    <p data-fa="بله، تدوین و محتوای ویدیویی هم جزو خدمات Ekranoo هست."
+                       data-en="Yes, video editing and video content are also part of Ekranoo's services.">
+
+                        بله، تدوین و محتوای ویدیویی هم جزو خدمات Ekranoo هست.
+
+                    </p>
+
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+</div>
+
+
+<!-- ================= MORE WORK MODAL ================= -->
+
+<div class="modal"
+     id="moreModal">
+
+
+    <div class="modal-content">
+
+
+        <button class="modal-close"
+                onclick="closeAllModals()">
+
+            <i class="fa-solid fa-xmark"></i>
+
+        </button>
+
+
+        <div class="text-modal"
+             style="padding-bottom:10px;">
+
+
+            <h2 data-fa="نمونه‌کارهای بیشتر"
+                data-en="More Works">
+
+                نمونه‌کارهای بیشتر
+
+            </h2>
+
+
+        </div>
+
+
+        <div class="more-grid"
+             id="moreGrid">
+
+            <!-- JS -->
+
+        </div>
+
+
+    </div>
+
+
+</div>
+
+
+<!-- ================= IMAGE MODAL ================= -->
+
+<div class="modal"
+     id="imageModal">
+
+
+    <div class="modal-content image-modal-content">
+
+
+        <button class="modal-close"
+                onclick="closeAllModals()">
+
+            <i class="fa-solid fa-xmark"></i>
+
+        </button>
+
+
+        <img id="modalImage"
+             src=""
+             alt="Portfolio Work"
+             draggable="false">
+
+
+        <!--
+            دکمه دانلود حذف شده است.
+        -->
+
+
+        <div class="image-actions">
+
+
+            <button class="btn btn-primary"
+                    id="shareBtn">
+
+
+                <i class="fa-solid fa-share-nodes"></i>
+
+
+                <span data-fa="اشتراک‌گذاری"
+                      data-en="Share">
+
+                    اشتراک‌گذاری
+
+                </span>
+
+
+            </button>
+
+
+            <button class="btn btn-secondary"
+                    onclick="closeAllModals()">
+
+
+                <i class="fa-solid fa-xmark"></i>
+
+
+                <span data-fa="بستن"
+                      data-en="Close">
+
+                    بستن
+
+                </span>
+
+
+            </button>
+
+
+        </div>
+
+
+    </div>
+
+
+</div>
+
+
+<!-- ================= FLOATING NAV ================= -->
+
+<nav class="floating-nav">
+
+
+    <button onclick="scrollToId('about')"
+            title="About">
+
+        <i class="fa-solid fa-user"></i>
+
+    </button>
+
+
+    <button onclick="scrollToId('portfolio')"
+            title="Portfolio">
+
+        <i class="fa-solid fa-images"></i>
+
+    </button>
+
+
+    <button onclick="scrollToId('order')"
+            title="Order">
+
+        <i class="fa-solid fa-palette"></i>
+
+    </button>
+
+
+    <button onclick="openModal('faqModal')"
+            title="FAQ">
+
+        <i class="fa-solid fa-circle-question"></i>
+
+    </button>
+
+
+    <button class="language-btn"
+            id="bottomLanguageBtn"
+            title="Language">
+
+        EN
+
+    </button>
+
+
+</nav>
+
+
+<!-- ================= BACK TO TOP ================= -->
+
+<button class="back-top"
+        id="backTop">
+
+    <i class="fa-solid fa-arrow-up"></i>
+
+</button>
+
+
+<script>
+
+    /* =========================================================
+       EKRANOO PORTFOLIO
+    ========================================================= */
+
+
+    /* =========================================================
+       تصاویر نمونه‌کار
+
+       برای اضافه کردن عکس جدید فقط مسیر آن را
+       به یکی از آرایه‌های زیر اضافه کن.
+    ========================================================= */
+
+
+    const portfolioWorks = [
+
+        "portfolio/work1.jpg",
+        "portfolio/work2.jpg",
+        "portfolio/work3.jpg",
+        "portfolio/work4.jpg"
+
+    ];
+
+
+    const moreWorks = [
+
+        "portfolio/more1.jpg",
+        "portfolio/more2.jpg",
+        "portfolio/more3.jpg",
+        "portfolio/more4.jpg",
+        "portfolio/more5.jpg",
+        "portfolio/more6.jpg",
+        "portfolio/more7.jpg",
+        "portfolio/more8.jpg",
+        "portfolio/more9.jpg",
+        "portfolio/more10.jpg",
+
+    ];
+
+
+    /* =========================================================
+       LANGUAGE
+    ========================================================= */
+
+
+    let currentLanguage =
+        localStorage.getItem(
+            "ekranoo-language"
+        ) || "fa";
+
+
+    function updateLanguage() {
+
+        const html =
+            document.documentElement;
+
+
+        html.lang =
+            currentLanguage;
+
+
+        html.dir =
+            currentLanguage === "fa"
+                ? "rtl"
+                : "ltr";
+
+
+        document
+            .querySelectorAll(
+                "[data-fa][data-en]"
+            )
+            .forEach(element => {
+
+                element.textContent =
+                    element.getAttribute(
+                        "data-" +
+                        currentLanguage
+                    );
+
+            });
+
+
+        const bottomLanguageBtn =
+            document.getElementById(
+                "bottomLanguageBtn"
+            );
+
+
+        if (bottomLanguageBtn) {
+
+            bottomLanguageBtn.textContent =
+                currentLanguage === "fa"
+                    ? "EN"
+                    : "FA";
+
+        }
+
+
+        localStorage.setItem(
+            "ekranoo-language",
+            currentLanguage
+        );
+
+    }
+
+
+    function toggleLanguage() {
+
+        currentLanguage =
+            currentLanguage === "fa"
+                ? "en"
+                : "fa";
+
+
+        updateLanguage();
+
+
+        renderPortfolio();
+
+    }
+
+
+    document
+        .getElementById(
+            "bottomLanguageBtn"
+        )
+        .addEventListener(
+            "click",
+            toggleLanguage
+        );
+
+
+    document
+        .getElementById(
+            "drawerLanguageBtn"
+        )
+        .addEventListener(
+            "click",
+            () => {
+
+                toggleLanguage();
+
+                closeDrawer();
+
+            }
+        );
+
+
+    /* =========================================================
+       PORTFOLIO
+    ========================================================= */
+
+
+    const portfolioGrid =
+        document.getElementById(
+            "portfolioGrid"
+        );
+
+
+    const moreGrid =
+        document.getElementById(
+            "moreGrid"
+        );
+
+
+    function createWorkCard(
+        path,
+        index
+    ) {
+
+        const card =
+            document.createElement("div");
+
+
+        card.className =
+            "work-card reveal";
+
+
+        card.innerHTML = `
+
+            <img
+                src="${path}"
+                alt="Ekranoo Portfolio ${index + 1}"
+                loading="lazy"
+                draggable="false"
+            >
+
+            <div class="work-overlay">
+
+                <span>
+
+                    ${
+                        currentLanguage === "fa"
+                            ? "مشاهده طرح"
+                            : "View Design"
+                    }
+
+                </span>
+
+                <div class="zoom-icon">
+
+                    <i class="fa-solid fa-expand"></i>
+
+                </div>
+
+            </div>
+
+        `;
+
+
+        card.addEventListener(
+            "click",
+            () => {
+
+                openImageModal(
+                    path
+                );
+
+            }
+        );
+
+
+        return card;
+
+    }
+
+
+    function renderPortfolio() {
+
+        portfolioGrid.innerHTML = "";
+
+
+        portfolioWorks
+            .forEach(
+                (
+                    path,
+                    index
+                ) => {
+
+                    portfolioGrid.appendChild(
+
+                        createWorkCard(
+                            path,
+                            index
+                        )
+
+                    );
+
+                }
+            );
+
+
+        moreGrid.innerHTML = "";
+
+
+        moreWorks
+            .forEach(
+                (
+                    path,
+                    index
+                ) => {
+
+                    moreGrid.appendChild(
+
+                        createWorkCard(
+                            path,
+                            index
+                        )
+
+                    );
+
+                }
+            );
+
+
+        observeReveal();
+
+    }
+
+
+    /* =========================================================
+       MODALS
+    ========================================================= */
+
+
+    function openModal(id) {
+
+        closeAllModals();
+
+
+        const modal =
+            document.getElementById(
+                id
+            );
+
+
+        if (!modal) return;
+
+
+        modal.classList.add(
+            "active"
+        );
+
+
+        document.body.style.overflow =
+            "hidden";
+
+    }
+
+
+    function closeAllModals() {
+
+        document
+            .querySelectorAll(
+                ".modal"
+            )
+            .forEach(
+                modal => {
+
+                    modal.classList.remove(
+                        "active"
+                    );
+
+                }
+            );
+
+
+        document.body.style.overflow =
+            "";
+
+    }
+
+
+    /* =========================================================
+       IMAGE MODAL
+
+       مودال قبلی قبل از باز شدن عکس بسته می‌شود.
+       بنابراین مودال‌ها روی هم قرار نمی‌گیرند.
+    ========================================================= */
+
+
+    function openImageModal(path) {
+
+        closeAllModals();
+
+
+        const modal =
+            document.getElementById(
+                "imageModal"
+            );
+
+
+        const image =
+            document.getElementById(
+                "modalImage"
+            );
+
+
+        image.src =
+            path;
+
+
+        modal.classList.add(
+            "active"
+        );
+
+
+        document.body.style.overflow =
+            "hidden";
+
+
+        const shareBtn =
+            document.getElementById(
+                "shareBtn"
+            );
+
+
+        shareBtn.onclick =
+            async () => {
+
+                try {
+
+                    if (
+                        navigator.share
+                    ) {
+
+                        await navigator.share({
+
+                            title:
+                                "Ekranoo Portfolio",
+
+                            text:
+                                currentLanguage === "fa"
+                                    ? "نمونه‌کار Ekranoo"
+                                    : "Ekranoo Portfolio",
+
+                            url:
+                                window.location.href
+
+                        });
+
+                    }
+
+                    else {
+
+                        await navigator
+                            .clipboard
+                            .writeText(
+                                window.location.href
+                            );
+
+
+                        alert(
+
+                            currentLanguage === "fa"
+
+                                ? "لینک صفحه کپی شد."
+
+                                : "Page link copied."
+
+                        );
+
+                    }
+
+                }
+
+                catch (error) {
+
+                    console.log(
+                        error
+                    );
+
+                }
+
+            };
+
+    }
+
+
+    /* =========================================================
+       DRAWER
+    ========================================================= */
+
+
+    const drawer =
+        document.getElementById(
+            "drawer"
+        );
+
+
+    const drawerOverlay =
+        document.getElementById(
+            "drawerOverlay"
+        );
+
+
+    function openDrawer() {
+
+        drawer.classList.add(
+            "active"
+        );
+
+
+        drawerOverlay.classList.add(
+            "active"
+        );
+
+
+        document.body.style.overflow =
+            "hidden";
+
+    }
+
+
+    function closeDrawer() {
+
+        drawer.classList.remove(
+            "active"
+        );
+
+
+        drawerOverlay.classList.remove(
+            "active"
+        );
+
+
+        document.body.style.overflow =
+            "";
+
+    }
+
+
+    document
+        .getElementById(
+            "menuBtn"
+        )
+        .addEventListener(
+            "click",
+            openDrawer
+        );
+
+
+    document
+        .getElementById(
+            "drawerClose"
+        )
+        .addEventListener(
+            "click",
+            closeDrawer
+        );
+
+
+    drawerOverlay
+        .addEventListener(
+            "click",
+            closeDrawer
+        );
+
+
+    document
+        .querySelectorAll(
+            "[data-close-drawer]"
+        )
+        .forEach(
+            link => {
+
+                link.addEventListener(
+                    "click",
+                    closeDrawer
+                );
+
+            }
+        );
+
+
+    /* =========================================================
+       FAQ
+    ========================================================= */
+
+
+    document
+        .querySelectorAll(
+            ".faq-question"
+        )
+        .forEach(
+            button => {
+
+                button.addEventListener(
+                    "click",
+                    () => {
+
+                        const item =
+                            button.parentElement;
+
+
+                        const parentList =
+                            item.parentElement;
+
+
+                        parentList
+                            .querySelectorAll(
+                                ".faq-item"
+                            )
+                            .forEach(
+                                other => {
+
+                                    if (
+                                        other !== item
+                                    ) {
+
+                                        other.classList.remove(
+                                            "active"
+                                        );
+
+                                    }
+
+                                }
+                            );
+
+
+                        item.classList.toggle(
+                            "active"
+                        );
+
+                    }
+                );
+
+            }
+        );
+
+
+    /* =========================================================
+       BACK TO TOP
+    ========================================================= */
+
+
+    const backTop =
+        document.getElementById(
+            "backTop"
+        );
+
+
+    window.addEventListener(
+        "scroll",
+        () => {
+
+            if (
+                window.scrollY > 450
+            ) {
+
+                backTop.classList.add(
+                    "show"
+                );
+
+            }
+
+            else {
+
+                backTop.classList.remove(
+                    "show"
+                );
+
+            }
+
+        }
+    );
+
+
+    backTop.addEventListener(
+        "click",
+        () => {
+
+            window.scrollTo({
+
+                top: 0,
+
+                behavior: "smooth"
+
+            });
+
+        }
+    );
+
+
+    /* =========================================================
+       SCROLL
+    ========================================================= */
+
+
+    function scrollToId(id) {
+
+        const element =
+            document.getElementById(
+                id
+            );
+
+
+        if (!element) return;
+
+
+        element.scrollIntoView({
+
+            behavior: "smooth",
+
+            block: "start"
+
+        });
+
+    }
+
+
+    /* =========================================================
+       REVEAL
+    ========================================================= */
+
+
+    let revealObserver;
+
+
+    function observeReveal() {
+
+        if (
+            revealObserver
+        ) {
+
+            revealObserver.disconnect();
+
+        }
+
+
+        revealObserver =
+            new IntersectionObserver(
+
+                entries => {
+
+                    entries.forEach(
+                        entry => {
+
+                            if (
+                                entry.isIntersecting
+                            ) {
+
+                                entry.target
+                                    .classList
+                                    .add(
+                                        "visible"
+                                    );
+
+
+                                revealObserver
+                                    .unobserve(
+                                        entry.target
+                                    );
+
+                            }
+
+                        }
+                    );
+
+                },
+
+                {
+                    threshold: 0.12
+                }
+
+            );
+
+
+        document
+            .querySelectorAll(
+                ".reveal"
+            )
+            .forEach(
+                element => {
+
+                    revealObserver.observe(
+                        element
+                    );
+
+                }
+            );
+
+    }
+
+
+    /* =========================================================
+       IMAGE PROTECTION
+
+       جلوگیری از:
+
+       - کلیک راست روی نمونه‌کار
+       - Drag تصویر
+       - انتخاب تصویر
+       - Long Press ساده در بعضی مرورگرها
+
+       توجه:
+       امنیت 100٪ برای تصاویر سمت کاربر وجود ندارد.
+    ========================================================= */
+
+
+    document.addEventListener(
+        "contextmenu",
+        event => {
+
+            if (
+
+                event.target.tagName === "IMG"
+
+                ||
+
+                event.target.closest(
+                    ".work-card"
+                )
+
+                ||
+
+                event.target.closest(
+                    "#imageModal"
+                )
+
+            ) {
+
+                event.preventDefault();
+
+            }
+
+        }
+    );
+
+
+    document.addEventListener(
+        "dragstart",
+        event => {
+
+            if (
+                event.target.tagName === "IMG"
+            ) {
+
+                event.preventDefault();
+
+            }
+
+        }
+    );
+
+
+    /* =========================================================
+       ESCAPE
+    ========================================================= */
+
+
+    document.addEventListener(
+        "keydown",
+        event => {
+
+            if (
+                event.key === "Escape"
+            ) {
+
+                closeAllModals();
+
+                closeDrawer();
+
+            }
+
+        }
+    );
+
+
+    /* =========================================================
+       CLICK OUTSIDE MODAL
+    ========================================================= */
+
+
+    document
+        .querySelectorAll(
+            ".modal"
+        )
+        .forEach(
+            modal => {
+
+                modal.addEventListener(
+                    "click",
+                    event => {
+
+                        if (
+                            event.target === modal
+                        ) {
+
+                            closeAllModals();
+
+                        }
+
+                    }
+                );
+
+            }
+        );
+
+
+    /* =========================================================
+       INITIALIZE
+    ========================================================= */
+
+
+    updateLanguage();
+
+    renderPortfolio();
+
+    observeReveal();
+
+
+</script>
+
+</body>
+</html>
