@@ -155,7 +155,8 @@
         .work-card,
         .work-card img,
         .work-card video,
-        #modalImage {
+        #modalImage,
+        #modalVideo {
             -webkit-user-select: none;
             user-select: none;
 
@@ -1063,8 +1064,7 @@
         }
 
 
-        .video-card:hover .video-play-btn,
-        .video-card.is-paused .video-play-btn {
+        .video-card:hover .video-play-btn {
             transform: translate(-50%,-50%) scale(1.45);
 
             background: rgba(252,158,209,.85);
@@ -1072,43 +1072,6 @@
             border-color: rgba(252,158,209,.85);
 
             color: #151016;
-        }
-
-
-        .video-card.is-playing .video-play-btn {
-            opacity: 0;
-        }
-
-
-        .video-card.is-playing:hover .video-play-btn {
-            opacity: 1;
-        }
-
-
-        .video-progress {
-            position: absolute;
-
-            left: 0;
-            right: 0;
-            bottom: 0;
-
-            height: 5px;
-
-            background: rgba(255,255,255,.16);
-
-            z-index: 3;
-
-            cursor: pointer;
-        }
-
-
-        .video-progress-bar {
-            height: 100%;
-            width: 0%;
-
-            background: var(--primary);
-
-            transition: width .12s linear;
         }
 
 
@@ -1140,6 +1103,230 @@
             font-size: 13px;
 
             pointer-events: none;
+        }
+
+
+        /* =====================================================
+           VIDEO MODAL
+           (پخش ویدیو با صدا + کنترل‌های سفارشی)
+        ===================================================== */
+
+        .video-modal-content {
+            width: min(900px, 100%);
+
+            display: flex;
+            flex-direction: column;
+
+            overflow: hidden;
+
+            background: #08080d;
+        }
+
+
+        .video-modal-content .modal-close {
+            z-index: 10;
+        }
+
+
+        #modalVideo {
+            width: 100%;
+
+            max-height: 68vh;
+
+            flex: 1 1 auto;
+            min-height: 0;
+
+            display: block;
+
+            object-fit: contain;
+
+            background: #000;
+
+            cursor: pointer;
+        }
+
+
+        .video-controls {
+            direction: ltr;
+
+            display: flex;
+            align-items: center;
+
+            gap: 12px;
+
+            padding: 12px 16px;
+
+            background: rgba(16,16,24,.98);
+
+            border-top: 1px solid var(--border);
+        }
+
+
+        .vc-btn {
+            flex: 0 0 auto;
+
+            width: 40px;
+            height: 40px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border: 1px solid var(--border);
+            border-radius: 13px;
+
+            background: rgba(255,255,255,.05);
+
+            color: #ddd;
+
+            font-size: 14px;
+
+            cursor: pointer;
+
+            transition: var(--transition);
+        }
+
+
+        .vc-btn:hover {
+            color: var(--primary);
+
+            border-color: rgba(252,158,209,.4);
+        }
+
+
+        .vc-play {
+            background: var(--primary);
+
+            border-color: var(--primary);
+
+            color: #151016;
+        }
+
+
+        .vc-play:hover {
+            background: #fff;
+
+            border-color: #fff;
+
+            color: #151016;
+        }
+
+
+        .vc-time {
+            flex: 0 0 auto;
+
+            min-width: 86px;
+
+            text-align: center;
+
+            font-size: 12px;
+
+            color: var(--muted);
+
+            font-variant-numeric: tabular-nums;
+        }
+
+
+        .vc-progress {
+            position: relative;
+
+            flex: 1 1 auto;
+
+            height: 22px;
+
+            cursor: pointer;
+
+            touch-action: none;
+        }
+
+
+        .vc-progress::before {
+            content: "";
+
+            position: absolute;
+
+            top: 50%;
+            left: 0;
+            right: 0;
+
+            height: 5px;
+
+            transform: translateY(-50%);
+
+            border-radius: 10px;
+
+            background: rgba(255,255,255,.16);
+        }
+
+
+        .vc-progress-bar {
+            position: absolute;
+
+            top: 50%;
+            left: 0;
+
+            height: 5px;
+            width: 0%;
+
+            transform: translateY(-50%);
+
+            border-radius: 10px;
+
+            background: var(--primary);
+
+            box-shadow: 0 0 12px rgba(252,158,209,.45);
+
+            pointer-events: none;
+        }
+
+
+        .vc-progress-bar::after {
+            content: "";
+
+            position: absolute;
+
+            top: 50%;
+            right: -6px;
+
+            width: 13px;
+            height: 13px;
+
+            transform: translateY(-50%);
+
+            border-radius: 50%;
+
+            background: #fff;
+
+            box-shadow: 0 0 10px rgba(252,158,209,.8);
+        }
+
+
+        @media (max-width: 600px) {
+
+            .video-controls {
+                gap: 8px;
+
+                padding: 10px;
+            }
+
+
+            .vc-btn {
+                width: 38px;
+                height: 38px;
+            }
+
+
+            .vc-time {
+                min-width: 74px;
+
+                font-size: 11px;
+            }
+
+
+            #modalVideo {
+                max-height: 58vh;
+            }
+
         }
 
 
@@ -3479,6 +3666,82 @@
 </div>
 
 
+<!-- ================= VIDEO MODAL ================= -->
+
+<div class="modal"
+     id="videoModal">
+
+
+    <div class="modal-content video-modal-content">
+
+
+        <button class="modal-close"
+                onclick="closeAllModals()">
+
+            <i class="fa-solid fa-xmark"></i>
+
+        </button>
+
+
+        <video
+            id="modalVideo"
+            playsinline
+            preload="metadata"
+            controlsList="nodownload noremoteplayback noplaybackrate"
+            disablePictureInPicture
+            draggable="false"
+        ></video>
+
+
+        <div class="video-controls">
+
+
+            <button class="vc-btn vc-play"
+                    id="modalPlayBtn"
+                    aria-label="Play / Pause">
+
+                <i class="fa-solid fa-play"
+                   id="modalPlayIcon"></i>
+
+            </button>
+
+
+            <span class="vc-time"
+                  id="modalTime">
+
+                0:00 / 0:00
+
+            </span>
+
+
+            <div class="vc-progress"
+                 id="modalProgress">
+
+                <div class="vc-progress-bar"
+                     id="modalProgressBar"></div>
+
+            </div>
+
+
+            <button class="vc-btn"
+                    id="modalMuteBtn"
+                    aria-label="Sound">
+
+                <i class="fa-solid fa-volume-high"
+                   id="modalMuteIcon"></i>
+
+            </button>
+
+
+        </div>
+
+
+    </div>
+
+
+</div>
+
+
 <!-- ================= FLOATING NAV ================= -->
 
 <nav class="floating-nav">
@@ -3788,9 +4051,9 @@
     /* =========================================================
        ویدیوهای نمونه‌کار (تدوین)
 
-       با یک ضربه/کلیک روی کارت، ویدیو پخش یا متوقف می‌شود.
-       دکمه پلی/پاز روی هاور و وقتی متوقف است بزرگ‌تر می‌شود
-       و نوار زمان (progress) پایین ویدیو نمایش داده می‌شود.
+       با یک ضربه/کلیک روی کارت، ویدیو داخل مودال
+       بزرگ می‌شود و با صدا پخش می‌شود. کنترل پخش/مکث،
+       نوار زمان و دکمه صدا داخل مودال قرار دارند.
     ========================================================= */
 
     function createVideoCard(
@@ -3803,7 +4066,7 @@
 
 
         card.className =
-            "work-card video-card reveal is-paused";
+            "work-card video-card reveal";
 
 
         card.innerHTML = `
@@ -3812,6 +4075,7 @@
                 src="${path}"
                 preload="metadata"
                 playsinline
+                muted
                 controlsList="nodownload noremoteplayback noplaybackrate"
                 disablePictureInPicture
                 draggable="false"
@@ -3825,157 +4089,16 @@
                 <i class="fa-solid fa-play"></i>
             </div>
 
-            <div class="video-progress">
-                <div class="video-progress-bar"></div>
-            </div>
-
         `;
-
-
-        const video =
-            card.querySelector("video");
-
-        const playBtn =
-            card.querySelector(".video-play-btn");
-
-        const playIcon =
-            playBtn.querySelector("i");
-
-        const progressWrap =
-            card.querySelector(".video-progress");
-
-        const progressBar =
-            card.querySelector(".video-progress-bar");
-
-
-        function setIcon(isPlaying) {
-
-            playIcon.className =
-                isPlaying
-                    ? "fa-solid fa-pause"
-                    : "fa-solid fa-play";
-
-        }
-
-
-        video.addEventListener(
-            "play",
-            () => {
-
-                document
-                    .querySelectorAll(
-                        ".video-card video"
-                    )
-                    .forEach(
-                        other => {
-
-                            if (
-                                other !== video
-                                &&
-                                !other.paused
-                            ) {
-
-                                other.pause();
-
-                            }
-
-                        }
-                    );
-
-
-                card.classList.add("is-playing");
-                card.classList.remove("is-paused");
-
-                setIcon(true);
-
-            }
-        );
-
-
-        video.addEventListener(
-            "pause",
-            () => {
-
-                card.classList.remove("is-playing");
-                card.classList.add("is-paused");
-
-                setIcon(false);
-
-            }
-        );
-
-
-        video.addEventListener(
-            "ended",
-            () => {
-
-                video.currentTime = 0;
-
-                card.classList.remove("is-playing");
-                card.classList.add("is-paused");
-
-                setIcon(false);
-
-                progressBar.style.width = "0%";
-
-            }
-        );
-
-
-        video.addEventListener(
-            "timeupdate",
-            () => {
-
-                if (!video.duration) return;
-
-                progressBar.style.width =
-                    (
-                        video.currentTime /
-                        video.duration *
-                        100
-                    ) + "%";
-
-            }
-        );
 
 
         card.addEventListener(
             "click",
             () => {
 
-                if (video.paused) {
-
-                    video.play();
-
-                }
-
-                else {
-
-                    video.pause();
-
-                }
-
-            }
-        );
-
-
-        progressWrap.addEventListener(
-            "click",
-            event => {
-
-                event.stopPropagation();
-
-                if (!video.duration) return;
-
-                const rect =
-                    progressWrap.getBoundingClientRect();
-
-                const ratio =
-                    (event.clientX - rect.left) /
-                    rect.width;
-
-                video.currentTime =
-                    ratio * video.duration;
+                openVideoModal(
+                    path
+                );
 
             }
         );
@@ -4109,6 +4232,40 @@
         document.body.style.overflow =
             "";
 
+
+        /* ویدیوی مودال هم متوقف و آزاد شود */
+
+        if (modalVideo) {
+
+            try {
+
+                modalVideo.pause();
+
+            }
+
+            catch (error) {
+
+                console.log(error);
+
+            }
+
+
+            if (
+                modalVideo.hasAttribute(
+                    "src"
+                )
+            ) {
+
+                modalVideo.removeAttribute(
+                    "src"
+                );
+
+                modalVideo.load();
+
+            }
+
+        }
+
     }
 
 
@@ -4216,6 +4373,522 @@
             };
 
     }
+
+
+    /* =========================================================
+       VIDEO MODAL
+
+       - ویدیو داخل مودال بزرگ می‌شود
+       - با صدا پخش می‌شود
+       - دکمه پخش/مکث + نوار زمان قابل کشیدن
+       - بدون دکمه دانلود و بدون منوی کلیک راست
+    ========================================================= */
+
+
+    const modalVideo =
+        document.getElementById(
+            "modalVideo"
+        );
+
+
+    const modalPlayBtn =
+        document.getElementById(
+            "modalPlayBtn"
+        );
+
+
+    const modalPlayIcon =
+        document.getElementById(
+            "modalPlayIcon"
+        );
+
+
+    const modalMuteBtn =
+        document.getElementById(
+            "modalMuteBtn"
+        );
+
+
+    const modalMuteIcon =
+        document.getElementById(
+            "modalMuteIcon"
+        );
+
+
+    const modalTime =
+        document.getElementById(
+            "modalTime"
+        );
+
+
+    const modalProgress =
+        document.getElementById(
+            "modalProgress"
+        );
+
+
+    const modalProgressBar =
+        document.getElementById(
+            "modalProgressBar"
+        );
+
+
+    function formatTime(seconds) {
+
+        if (
+            !isFinite(seconds) ||
+            seconds < 0
+        ) {
+
+            return "0:00";
+
+        }
+
+
+        const minutes =
+            Math.floor(seconds / 60);
+
+
+        const remaining =
+            Math.floor(seconds % 60);
+
+
+        return (
+            minutes +
+            ":" +
+            (
+                remaining < 10
+                    ? "0"
+                    : ""
+            ) +
+            remaining
+        );
+
+    }
+
+
+    function updateMuteIcon() {
+
+        modalMuteIcon.className =
+
+            (
+                modalVideo.muted ||
+                modalVideo.volume === 0
+            )
+
+                ? "fa-solid fa-volume-xmark"
+
+                : "fa-solid fa-volume-high";
+
+    }
+
+
+    function setModalPlayingUI(isPlaying) {
+
+        modalPlayIcon.className =
+
+            isPlaying
+
+                ? "fa-solid fa-pause"
+
+                : "fa-solid fa-play";
+
+    }
+
+
+    function openVideoModal(path) {
+
+        /* پیش‌نمایش‌های داخل کارت‌ها متوقف شوند */
+
+        document
+            .querySelectorAll(
+                ".video-card video"
+            )
+            .forEach(
+                video => video.pause()
+            );
+
+
+        closeAllModals();
+
+
+        modalVideo.src =
+            path;
+
+
+        /* صدا روشن باشد */
+
+        modalVideo.muted = false;
+
+        modalVideo.volume = 1;
+
+
+        updateMuteIcon();
+
+
+        modalProgressBar.style.width =
+            "0%";
+
+
+        modalTime.textContent =
+            "0:00 / 0:00";
+
+
+        const modal =
+            document.getElementById(
+                "videoModal"
+            );
+
+
+        modal.classList.add(
+            "active"
+        );
+
+
+        document.body.style.overflow =
+            "hidden";
+
+
+        /* چون کاربر خودش کلیک کرده، مرورگر اجازه پخش با صدا می‌دهد */
+
+        const playPromise =
+            modalVideo.play();
+
+
+        if (
+            playPromise &&
+            typeof playPromise.catch === "function"
+        ) {
+
+            playPromise.catch(
+                () => {
+
+                    setModalPlayingUI(
+                        false
+                    );
+
+                }
+            );
+
+        }
+
+    }
+
+
+    function toggleModalVideo() {
+
+        if (
+            modalVideo.paused
+        ) {
+
+            const playPromise =
+                modalVideo.play();
+
+
+            if (
+                playPromise &&
+                typeof playPromise.catch === "function"
+            ) {
+
+                playPromise.catch(
+                    () => {
+
+                        setModalPlayingUI(
+                            false
+                        );
+
+                    }
+                );
+
+            }
+
+        }
+
+        else {
+
+            modalVideo.pause();
+
+        }
+
+    }
+
+
+    modalPlayBtn.addEventListener(
+        "click",
+        toggleModalVideo
+    );
+
+
+    modalVideo.addEventListener(
+        "click",
+        toggleModalVideo
+    );
+
+
+    modalVideo.addEventListener(
+        "play",
+        () => {
+
+            setModalPlayingUI(
+                true
+            );
+
+        }
+    );
+
+
+    modalVideo.addEventListener(
+        "pause",
+        () => {
+
+            setModalPlayingUI(
+                false
+            );
+
+        }
+    );
+
+
+    modalVideo.addEventListener(
+        "ended",
+        () => {
+
+            setModalPlayingUI(
+                false
+            );
+
+
+            modalProgressBar.style.width =
+                "0%";
+
+        }
+    );
+
+
+    modalVideo.addEventListener(
+        "loadedmetadata",
+        () => {
+
+            modalTime.textContent =
+
+                formatTime(
+                    modalVideo.currentTime
+                ) +
+
+                " / " +
+
+                formatTime(
+                    modalVideo.duration
+                );
+
+        }
+    );
+
+
+    modalVideo.addEventListener(
+        "timeupdate",
+        () => {
+
+            if (
+                !modalVideo.duration ||
+                !isFinite(
+                    modalVideo.duration
+                )
+            ) {
+
+                return;
+
+            }
+
+
+            modalProgressBar.style.width =
+
+                (
+                    modalVideo.currentTime /
+                    modalVideo.duration *
+                    100
+                ) +
+                "%";
+
+
+            modalTime.textContent =
+
+                formatTime(
+                    modalVideo.currentTime
+                ) +
+
+                " / " +
+
+                formatTime(
+                    modalVideo.duration
+                );
+
+        }
+    );
+
+
+    /* ---------- نوار زمان (کلیک + کشیدن) ---------- */
+
+    let isSeeking = false;
+
+
+    function seekModalVideo(clientX) {
+
+        const rect =
+            modalProgress
+                .getBoundingClientRect();
+
+
+        if (
+            !rect.width ||
+            !modalVideo.duration
+        ) {
+
+            return;
+
+        }
+
+
+        let ratio =
+            (
+                clientX -
+                rect.left
+            ) /
+            rect.width;
+
+
+        ratio =
+            Math.min(
+                Math.max(
+                    ratio,
+                    0
+                ),
+                1
+            );
+
+
+        modalVideo.currentTime =
+            ratio *
+            modalVideo.duration;
+
+
+        modalProgressBar.style.width =
+            (
+                ratio *
+                100
+            ) +
+            "%";
+
+    }
+
+
+    modalProgress.addEventListener(
+        "pointerdown",
+        event => {
+
+            isSeeking = true;
+
+
+            if (
+                modalProgress
+                    .setPointerCapture
+            ) {
+
+                modalProgress
+                    .setPointerCapture(
+                        event.pointerId
+                    );
+
+            }
+
+
+            seekModalVideo(
+                event.clientX
+            );
+
+        }
+    );
+
+
+    modalProgress.addEventListener(
+        "pointermove",
+        event => {
+
+            if (
+                isSeeking
+            ) {
+
+                seekModalVideo(
+                    event.clientX
+                );
+
+            }
+
+        }
+    );
+
+
+    modalProgress.addEventListener(
+        "pointerup",
+        event => {
+
+            isSeeking = false;
+
+
+            if (
+                modalProgress
+                    .hasPointerCapture &&
+                modalProgress
+                    .hasPointerCapture(
+                        event.pointerId
+                    )
+            ) {
+
+                modalProgress
+                    .releasePointerCapture(
+                        event.pointerId
+                    );
+
+            }
+
+        }
+    );
+
+
+    modalProgress.addEventListener(
+        "pointercancel",
+        () => {
+
+            isSeeking = false;
+
+        }
+    );
+
+
+    /* ---------- دکمه صدا ---------- */
+
+    modalMuteBtn.addEventListener(
+        "click",
+        () => {
+
+            modalVideo.muted =
+                !modalVideo.muted;
+
+
+            if (
+                !modalVideo.muted &&
+                modalVideo.volume === 0
+            ) {
+
+                modalVideo.volume = 1;
+
+            }
+
+
+            updateMuteIcon();
+
+        }
+    );
 
 
     /* =========================================================
@@ -4525,17 +5198,17 @@
 
 
     /* =========================================================
-       IMAGE PROTECTION
+       IMAGE / VIDEO PROTECTION
 
        جلوگیری از:
 
-       - کلیک راست روی نمونه‌کار
-       - Drag تصویر
+       - کلیک راست روی نمونه‌کار و ویدیو
+       - Drag تصویر و ویدیو
        - انتخاب تصویر
        - Long Press ساده در بعضی مرورگرها
 
        توجه:
-       امنیت 100٪ برای تصاویر سمت کاربر وجود ندارد.
+       امنیت 100٪ برای فایل‌های سمت کاربر وجود ندارد.
     ========================================================= */
 
 
@@ -4549,6 +5222,10 @@
 
                 ||
 
+                event.target.tagName === "VIDEO"
+
+                ||
+
                 event.target.closest(
                     ".work-card"
                 )
@@ -4557,6 +5234,12 @@
 
                 event.target.closest(
                     "#imageModal"
+                )
+
+                ||
+
+                event.target.closest(
+                    "#videoModal"
                 )
 
             ) {
@@ -4574,7 +5257,13 @@
         event => {
 
             if (
+
                 event.target.tagName === "IMG"
+
+                ||
+
+                event.target.tagName === "VIDEO"
+
             ) {
 
                 event.preventDefault();
