@@ -147,9 +147,6 @@
 
         /* =====================================================
            PROTECT PORTFOLIO IMAGES
-           
-           این بخش فقط جلوی روش‌های ساده دانلود را می‌گیرد.
-           جلوگیری 100٪ از کپی تصویر در وب ممکن نیست.
         ===================================================== */
 
         .work-card,
@@ -720,13 +717,7 @@
 
 
         /* =====================================================
-           EITAA LOGO (ماسک رنگی – همرنگ آیکون قبلی می‌شود)
-
-           چون لوگوی رسمی ایتا آماده نبود، آیکون paper-plane
-           جایگزین شده بود. حالا لوگوی واقعی ایتا با تکنیک
-           CSS mask جایگزین آن شده تا دقیقاً همرنگ متن/آیکون
-           والد خودش (currentColor) دربیاید و با hover هم
-           هماهنگ بماند.
+           EITAA LOGO (ماسک رنگی)
         ===================================================== */
 
         .icon-eitaa {
@@ -932,6 +923,8 @@
             opacity: 0;
 
             transition: .3s;
+
+            pointer-events: none;
         }
 
 
@@ -1009,7 +1002,8 @@
 
 
         /* =====================================================
-           PORTFOLIO – VIDEO CARDS (نمونه‌کارهای تدوین)
+           PORTFOLIO – VIDEO CARDS
+           پیش‌نمایش خودکار (بدون صدا، لوپ) داخل کارت کوچک
         ===================================================== */
 
         .video-card video {
@@ -1024,57 +1018,6 @@
         }
 
 
-        .video-play-btn {
-            position: absolute;
-
-            top: 50%;
-            left: 50%;
-
-            transform: translate(-50%,-50%) scale(1);
-
-            width: 46px;
-            height: 46px;
-
-            border-radius: 50%;
-
-            display: flex;
-
-            align-items: center;
-            justify-content: center;
-
-            background: rgba(8,8,13,.55);
-
-            border: 1px solid rgba(255,255,255,.25);
-
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-
-            color: #fff;
-
-            font-size: 17px;
-
-            z-index: 3;
-
-            pointer-events: none;
-
-            transition:
-                transform .35s cubic-bezier(.2,.8,.2,1),
-                background .3s ease,
-                opacity .3s ease;
-        }
-
-
-        .video-card:hover .video-play-btn {
-            transform: translate(-50%,-50%) scale(1.45);
-
-            background: rgba(252,158,209,.85);
-
-            border-color: rgba(252,158,209,.85);
-
-            color: #151016;
-        }
-
-
         .video-badge {
             position: absolute;
 
@@ -1083,8 +1026,8 @@
 
             z-index: 3;
 
-            width: 30px;
-            height: 30px;
+            width: 32px;
+            height: 32px;
 
             border-radius: 9px;
 
@@ -1106,225 +1049,56 @@
         }
 
 
-        /* =====================================================
-           VIDEO MODAL
-           (پخش ویدیو با صدا + کنترل‌های سفارشی)
-        ===================================================== */
+        .video-expand-hint {
+            position: absolute;
 
-        .video-modal-content {
-            width: min(900px, 100%);
+            bottom: 12px;
+            left: 12px;
 
-            display: flex;
-            flex-direction: column;
+            z-index: 3;
 
-            overflow: hidden;
+            width: 36px;
+            height: 36px;
 
-            background: #08080d;
-        }
-
-
-        .video-modal-content .modal-close {
-            z-index: 10;
-        }
-
-
-        #modalVideo {
-            width: 100%;
-
-            max-height: 68vh;
-
-            flex: 1 1 auto;
-            min-height: 0;
-
-            display: block;
-
-            object-fit: contain;
-
-            background: #000;
-
-            cursor: pointer;
-        }
-
-
-        .video-controls {
-            direction: ltr;
+            border-radius: 11px;
 
             display: flex;
-            align-items: center;
 
-            gap: 12px;
-
-            padding: 12px 16px;
-
-            background: rgba(16,16,24,.98);
-
-            border-top: 1px solid var(--border);
-        }
-
-
-        .vc-btn {
-            flex: 0 0 auto;
-
-            width: 40px;
-            height: 40px;
-
-            display: flex;
             align-items: center;
             justify-content: center;
 
-            border: 1px solid var(--border);
-            border-radius: 13px;
+            background: rgba(8,8,13,.55);
 
-            background: rgba(255,255,255,.05);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
 
-            color: #ddd;
+            color: #fff;
 
-            font-size: 14px;
+            font-size: 13px;
 
-            cursor: pointer;
+            pointer-events: none;
+
+            opacity: 0;
+
+            transform: translateY(6px);
 
             transition: var(--transition);
         }
 
 
-        .vc-btn:hover {
-            color: var(--primary);
+        .video-card:hover .video-expand-hint {
+            opacity: 1;
 
-            border-color: rgba(252,158,209,.4);
-        }
-
-
-        .vc-play {
-            background: var(--primary);
-
-            border-color: var(--primary);
-
-            color: #151016;
-        }
-
-
-        .vc-play:hover {
-            background: #fff;
-
-            border-color: #fff;
-
-            color: #151016;
-        }
-
-
-        .vc-time {
-            flex: 0 0 auto;
-
-            min-width: 86px;
-
-            text-align: center;
-
-            font-size: 12px;
-
-            color: var(--muted);
-
-            font-variant-numeric: tabular-nums;
-        }
-
-
-        .vc-progress {
-            position: relative;
-
-            flex: 1 1 auto;
-
-            height: 22px;
-
-            cursor: pointer;
-
-            touch-action: none;
-        }
-
-
-        .vc-progress::before {
-            content: "";
-
-            position: absolute;
-
-            top: 50%;
-            left: 0;
-            right: 0;
-
-            height: 5px;
-
-            transform: translateY(-50%);
-
-            border-radius: 10px;
-
-            background: rgba(255,255,255,.16);
-        }
-
-
-        .vc-progress-bar {
-            position: absolute;
-
-            top: 50%;
-            left: 0;
-
-            height: 5px;
-            width: 0%;
-
-            transform: translateY(-50%);
-
-            border-radius: 10px;
-
-            background: var(--primary);
-
-            box-shadow: 0 0 12px rgba(252,158,209,.45);
-
-            pointer-events: none;
-        }
-
-
-        .vc-progress-bar::after {
-            content: "";
-
-            position: absolute;
-
-            top: 50%;
-            right: -6px;
-
-            width: 13px;
-            height: 13px;
-
-            transform: translateY(-50%);
-
-            border-radius: 50%;
-
-            background: #fff;
-
-            box-shadow: 0 0 10px rgba(252,158,209,.8);
+            transform: translateY(0);
         }
 
 
         @media (max-width: 600px) {
 
-            .video-controls {
-                gap: 8px;
+            .video-expand-hint {
+                opacity: 1;
 
-                padding: 10px;
-            }
-
-
-            .vc-btn {
-                width: 38px;
-                height: 38px;
-            }
-
-
-            .vc-time {
-                min-width: 74px;
-
-                font-size: 11px;
-            }
-
-
-            #modalVideo {
-                max-height: 58vh;
+                transform: none;
             }
 
         }
@@ -1979,6 +1753,242 @@
 
 
         /* =====================================================
+           VIDEO MODAL
+           قاب پخش دقیقاً به نسبت تصویر ویدیو تغییر اندازه می‌دهد
+        ===================================================== */
+
+        .modal-content.video-modal-content {
+            width: auto;
+
+            max-width: 96vw;
+
+            max-height: 96vh;
+
+            overflow: hidden;
+
+            padding: 0;
+
+            background: #08080d;
+
+            display: inline-flex;
+
+            flex-direction: column;
+
+            align-items: center;
+
+            border-radius: 22px;
+        }
+
+
+        #modalVideo {
+            display: block;
+
+            max-width: 96vw;
+
+            max-height: 76vh;
+
+            width: auto;
+            height: auto;
+
+            background: #000;
+
+            object-fit: contain;
+
+            cursor: pointer;
+
+            flex-shrink: 0;
+        }
+
+
+        .video-controls {
+            direction: ltr;
+
+            display: flex;
+            align-items: center;
+
+            gap: 12px;
+
+            padding: 12px 16px;
+
+            background: rgba(16,16,24,.98);
+
+            border-top: 1px solid var(--border);
+
+            width: 100%;
+
+            box-sizing: border-box;
+        }
+
+
+        .vc-btn {
+            flex: 0 0 auto;
+
+            width: 40px;
+            height: 40px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border: 1px solid var(--border);
+            border-radius: 13px;
+
+            background: rgba(255,255,255,.05);
+
+            color: #ddd;
+
+            font-size: 14px;
+
+            cursor: pointer;
+
+            transition: var(--transition);
+        }
+
+
+        .vc-btn:hover {
+            color: var(--primary);
+
+            border-color: rgba(252,158,209,.4);
+        }
+
+
+        .vc-play {
+            background: var(--primary);
+
+            border-color: var(--primary);
+
+            color: #151016;
+        }
+
+
+        .vc-play:hover {
+            background: #fff;
+
+            border-color: #fff;
+
+            color: #151016;
+        }
+
+
+        .vc-time {
+            flex: 0 0 auto;
+
+            min-width: 86px;
+
+            text-align: center;
+
+            font-size: 12px;
+
+            color: var(--muted);
+
+            font-variant-numeric: tabular-nums;
+        }
+
+
+        .vc-progress {
+            position: relative;
+
+            flex: 1 1 auto;
+
+            height: 22px;
+
+            cursor: pointer;
+
+            touch-action: none;
+        }
+
+
+        .vc-progress::before {
+            content: "";
+
+            position: absolute;
+
+            top: 50%;
+            left: 0;
+            right: 0;
+
+            height: 5px;
+
+            transform: translateY(-50%);
+
+            border-radius: 10px;
+
+            background: rgba(255,255,255,.16);
+        }
+
+
+        .vc-progress-bar {
+            position: absolute;
+
+            top: 50%;
+            left: 0;
+
+            height: 5px;
+            width: 0%;
+
+            transform: translateY(-50%);
+
+            border-radius: 10px;
+
+            background: var(--primary);
+
+            box-shadow: 0 0 12px rgba(252,158,209,.45);
+
+            pointer-events: none;
+        }
+
+
+        .vc-progress-bar::after {
+            content: "";
+
+            position: absolute;
+
+            top: 50%;
+            right: -6px;
+
+            width: 13px;
+            height: 13px;
+
+            transform: translateY(-50%);
+
+            border-radius: 50%;
+
+            background: #fff;
+
+            box-shadow: 0 0 10px rgba(252,158,209,.8);
+        }
+
+
+        @media (max-width: 600px) {
+
+            .video-controls {
+                gap: 8px;
+
+                padding: 10px;
+            }
+
+
+            .vc-btn {
+                width: 38px;
+                height: 38px;
+            }
+
+
+            .vc-time {
+                min-width: 74px;
+
+                font-size: 11px;
+            }
+
+
+            #modalVideo {
+                max-height: 70vh;
+            }
+
+        }
+
+
+        /* =====================================================
            REVEAL
         ===================================================== */
 
@@ -2200,10 +2210,8 @@
      لوگو:
      logo.png
 
-     آیکون ایتا (کنار دکمه‌ها و شبکه‌های اجتماعی):
+     آیکون ایتا:
      eitaa-icon.png
-     (این عکس با تکنیک mask رنگش از CSS گرفته می‌شود،
-      پس همیشه همرنگ متن/آیکون کنار خودش درمی‌آید)
 
      نمونه‌کارهای اصلی (طراحی):
      portfolio/work1.jpg
@@ -2212,44 +2220,10 @@
      portfolio/work4.jpg
 
      نمونه‌کارهای بیشتر (طراحی):
-     portfolio/more1.jpg
-     تا
-     portfolio/more11.jpg
+     portfolio/more1.jpg ... portfolio/more11.jpg
 
      نمونه‌کارهای تدوین (ویدیو):
-     portfolio/ttt1.mp4
-     تا
-     portfolio/ttt5.mp4
-
-     برای اضافه کردن عکس جدید:
-
-     1. عکس را داخل پوشه portfolio قرار بده.
-     2. مسیر عکس را در بخش JAVASCRIPT پایین فایل
-        داخل portfolioWorks یا moreWorks اضافه کن.
-
-     مثال:
-
-     "portfolio/work5.jpg"
-
-     برای اضافه کردن ویدیوی تدوین جدید:
-
-     1. فایل ویدیو را داخل پوشه portfolio قرار بده.
-     2. مسیرش را داخل آرایه‌ی portfolioVideos
-        (در بخش JAVASCRIPT پایین فایل) اضافه کن.
-
-     مثال:
-
-     "portfolio/ttt6.mp4"
-
-     فرمت پیشنهادی عکس:
-
-     JPG
-     PNG
-     WEBP
-
-     فرمت پیشنهادی ویدیو:
-
-     MP4 (H.264)
+     portfolio/ttt1.mp4 ... portfolio/ttt6.mp4
 ============================================================ -->
 
 
@@ -2676,7 +2650,7 @@
         <div class="portfolio-grid"
              id="portfolioGrid">
 
-            <!-- JS تصاویر را اینجا قرار می‌دهد -->
+            <!-- JS -->
 
         </div>
 
@@ -3613,11 +3587,6 @@
              draggable="false">
 
 
-        <!--
-            دکمه دانلود حذف شده است.
-        -->
-
-
         <div class="image-actions">
 
 
@@ -3810,11 +3779,7 @@
 
     /* =========================================================
        تصاویر نمونه‌کار
-
-       برای اضافه کردن عکس جدید فقط مسیر آن را
-       به یکی از آرایه‌های زیر اضافه کن.
     ========================================================= */
-
 
     const portfolioWorks = [
 
@@ -3844,9 +3809,6 @@
 
     /* =========================================================
        ویدیوهای نمونه‌کار (تدوین)
-
-       برای اضافه کردن ویدیوی جدید فقط مسیر آن را
-       به آرایه‌ی زیر اضافه کن (داخل پوشه portfolio بگذار).
     ========================================================= */
 
     const portfolioVideos = [
@@ -3986,6 +3948,97 @@
         );
 
 
+    /* =========================================================
+       IntersectionObserver برای پیش‌نمایش ویدیوهای کوچک
+       فقط ویدیوهایی که در دید هستند پخش شوند.
+    ========================================================= */
+
+    let previewObserver = null;
+
+
+    function observePreviewVideos() {
+
+        if (previewObserver) {
+
+            previewObserver.disconnect();
+
+        }
+
+
+        previewObserver =
+            new IntersectionObserver(
+
+                entries => {
+
+                    entries.forEach(
+                        entry => {
+
+                            const video =
+                                entry.target;
+
+
+                            if (
+                                entry.isIntersecting
+                            ) {
+
+                                const playPromise =
+                                    video.play();
+
+
+                                if (
+                                    playPromise &&
+                                    typeof playPromise.catch ===
+                                        "function"
+                                ) {
+
+                                    playPromise.catch(
+                                        () => {}
+                                    );
+
+                                }
+
+                            }
+
+                            else {
+
+                                video.pause();
+
+                            }
+
+                        }
+                    );
+
+                },
+
+                {
+                    threshold: 0.25
+                }
+
+            );
+
+
+        document
+            .querySelectorAll(
+                ".video-card video"
+            )
+            .forEach(
+                video => {
+
+                    previewObserver.observe(
+                        video
+                    );
+
+                }
+            );
+
+    }
+
+
+    /* =========================================================
+       ساخت کارت تصویر
+    ========================================================= */
+
+
     function createWorkCard(
         path,
         index
@@ -4049,12 +4102,11 @@
 
 
     /* =========================================================
-       ویدیوهای نمونه‌کار (تدوین)
-
-       با یک ضربه/کلیک روی کارت، ویدیو داخل مودال
-       بزرگ می‌شود و با صدا پخش می‌شود. کنترل پخش/مکث،
-       نوار زمان و دکمه صدا داخل مودال قرار دارند.
+       ساخت کارت ویدیو
+       - پیش‌نمایش خودکار بی‌صدا و لوپ داخل کارت
+       - با ضربه باز می‌شود در مودال با صدا
     ========================================================= */
+
 
     function createVideoCard(
         path,
@@ -4073,9 +4125,11 @@
 
             <video
                 src="${path}"
-                preload="metadata"
-                playsinline
+                autoplay
                 muted
+                loop
+                playsinline
+                preload="metadata"
                 controlsList="nodownload noremoteplayback noplaybackrate"
                 disablePictureInPicture
                 draggable="false"
@@ -4085,8 +4139,8 @@
                 <i class="fa-solid fa-clapperboard"></i>
             </div>
 
-            <div class="video-play-btn">
-                <i class="fa-solid fa-play"></i>
+            <div class="video-expand-hint">
+                <i class="fa-solid fa-expand"></i>
             </div>
 
         `;
@@ -4179,6 +4233,8 @@
 
         observeReveal();
 
+        observePreviewVideos();
+
     }
 
 
@@ -4233,7 +4289,7 @@
             "";
 
 
-        /* ویدیوی مودال هم متوقف و آزاد شود */
+        /* پاک‌سازی ویدیوی مودال */
 
         if (modalVideo) {
 
@@ -4248,6 +4304,11 @@
                 console.log(error);
 
             }
+
+
+            modalVideo.style.width = "";
+
+            modalVideo.style.height = "";
 
 
             if (
@@ -4271,9 +4332,6 @@
 
     /* =========================================================
        IMAGE MODAL
-
-       مودال قبلی قبل از باز شدن عکس بسته می‌شود.
-       بنابراین مودال‌ها روی هم قرار نمی‌گیرند.
     ========================================================= */
 
 
@@ -4377,11 +4435,9 @@
 
     /* =========================================================
        VIDEO MODAL
-
-       - ویدیو داخل مودال بزرگ می‌شود
+       - قاب پخش دقیقاً به اندازه‌ی نسبت تصویر ویدیو
        - با صدا پخش می‌شود
-       - دکمه پخش/مکث + نوار زمان قابل کشیدن
-       - بدون دکمه دانلود و بدون منوی کلیک راست
+       - کنترل پخش/مکث + نوار زمان + دکمه صدا
     ========================================================= */
 
 
@@ -4496,9 +4552,110 @@
     }
 
 
+    /* ---------- تنظیم دقیق اندازه‌ی ویدیو ---------- */
+
+    function fitModalVideo() {
+
+        if (
+            !modalVideo.videoWidth ||
+            !modalVideo.videoHeight
+        ) {
+
+            return;
+
+        }
+
+
+        const ratio =
+
+            modalVideo.videoWidth /
+
+            modalVideo.videoHeight;
+
+
+        const maxW =
+
+            window.innerWidth * 0.94;
+
+
+        const maxH =
+
+            window.innerHeight * 0.72;
+
+
+        let w = maxW;
+
+        let h = w / ratio;
+
+
+        if (h > maxH) {
+
+            h = maxH;
+
+            w = h * ratio;
+
+        }
+
+
+        modalVideo.style.width =
+            Math.round(w) + "px";
+
+
+        modalVideo.style.height =
+            Math.round(h) + "px";
+
+    }
+
+
+    modalVideo.addEventListener(
+        "loadedmetadata",
+        () => {
+
+            fitModalVideo();
+
+
+            modalTime.textContent =
+
+                formatTime(
+                    modalVideo.currentTime
+                ) +
+
+                " / " +
+
+                formatTime(
+                    modalVideo.duration
+                );
+
+        }
+    );
+
+
+    window.addEventListener(
+        "resize",
+        () => {
+
+            if (
+                document
+                    .getElementById(
+                        "videoModal"
+                    )
+                    .classList
+                    .contains(
+                        "active"
+                    )
+            ) {
+
+                fitModalVideo();
+
+            }
+
+        }
+    );
+
+
     function openVideoModal(path) {
 
-        /* پیش‌نمایش‌های داخل کارت‌ها متوقف شوند */
+        /* پیش‌نمایش‌های کوچک متوقف شوند */
 
         document
             .querySelectorAll(
@@ -4515,8 +4672,6 @@
         modalVideo.src =
             path;
 
-
-        /* صدا روشن باشد */
 
         modalVideo.muted = false;
 
@@ -4549,7 +4704,7 @@
             "hidden";
 
 
-        /* چون کاربر خودش کلیک کرده، مرورگر اجازه پخش با صدا می‌دهد */
+        /* چون کاربر خودش کلیک کرده، صدا آزاد است */
 
         const playPromise =
             modalVideo.play();
@@ -4557,7 +4712,8 @@
 
         if (
             playPromise &&
-            typeof playPromise.catch === "function"
+            typeof playPromise.catch ===
+                "function"
         ) {
 
             playPromise.catch(
@@ -4587,7 +4743,8 @@
 
             if (
                 playPromise &&
-                typeof playPromise.catch === "function"
+                typeof playPromise.catch ===
+                    "function"
             ) {
 
                 playPromise.catch(
@@ -4660,26 +4817,6 @@
 
             modalProgressBar.style.width =
                 "0%";
-
-        }
-    );
-
-
-    modalVideo.addEventListener(
-        "loadedmetadata",
-        () => {
-
-            modalTime.textContent =
-
-                formatTime(
-                    modalVideo.currentTime
-                ) +
-
-                " / " +
-
-                formatTime(
-                    modalVideo.duration
-                );
 
         }
     );
@@ -5198,17 +5335,7 @@
 
 
     /* =========================================================
-       IMAGE / VIDEO PROTECTION
-
-       جلوگیری از:
-
-       - کلیک راست روی نمونه‌کار و ویدیو
-       - Drag تصویر و ویدیو
-       - انتخاب تصویر
-       - Long Press ساده در بعضی مرورگرها
-
-       توجه:
-       امنیت 100٪ برای فایل‌های سمت کاربر وجود ندارد.
+       PROTECTION
     ========================================================= */
 
 
@@ -5338,6 +5465,8 @@
     renderPortfolio();
 
     observeReveal();
+
+    observePreviewVideos();
 
 
 </script>
