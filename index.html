@@ -154,6 +154,7 @@
 
         .work-card,
         .work-card img,
+        .work-card video,
         #modalImage {
             -webkit-user-select: none;
             user-select: none;
@@ -165,6 +166,7 @@
 
 
         .work-card img,
+        .work-card video,
         #modalImage {
             pointer-events: none;
         }
@@ -717,6 +719,42 @@
 
 
         /* =====================================================
+           EITAA LOGO (ماسک رنگی – همرنگ آیکون قبلی می‌شود)
+
+           چون لوگوی رسمی ایتا آماده نبود، آیکون paper-plane
+           جایگزین شده بود. حالا لوگوی واقعی ایتا با تکنیک
+           CSS mask جایگزین آن شده تا دقیقاً همرنگ متن/آیکون
+           والد خودش (currentColor) دربیاید و با hover هم
+           هماهنگ بماند.
+        ===================================================== */
+
+        .icon-eitaa {
+            display: inline-block;
+
+            width: 1em;
+            height: 1em;
+
+            vertical-align: middle;
+
+            background-color: currentColor;
+
+            -webkit-mask-image: url('eitaa-icon.png');
+            mask-image: url('eitaa-icon.png');
+
+            -webkit-mask-repeat: no-repeat;
+            mask-repeat: no-repeat;
+
+            -webkit-mask-position: center;
+            mask-position: center;
+
+            -webkit-mask-size: contain;
+            mask-size: contain;
+
+            mask-mode: alpha;
+        }
+
+
+        /* =====================================================
            SECTIONS
         ===================================================== */
 
@@ -966,6 +1004,142 @@
             text-align: center;
 
             margin-top: 30px;
+        }
+
+
+        /* =====================================================
+           PORTFOLIO – VIDEO CARDS (نمونه‌کارهای تدوین)
+        ===================================================== */
+
+        .video-card video {
+            width: 100%;
+            height: 100%;
+
+            object-fit: cover;
+
+            display: block;
+
+            background: #000;
+        }
+
+
+        .video-play-btn {
+            position: absolute;
+
+            top: 50%;
+            left: 50%;
+
+            transform: translate(-50%,-50%) scale(1);
+
+            width: 46px;
+            height: 46px;
+
+            border-radius: 50%;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            background: rgba(8,8,13,.55);
+
+            border: 1px solid rgba(255,255,255,.25);
+
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+
+            color: #fff;
+
+            font-size: 17px;
+
+            z-index: 3;
+
+            pointer-events: none;
+
+            transition:
+                transform .35s cubic-bezier(.2,.8,.2,1),
+                background .3s ease,
+                opacity .3s ease;
+        }
+
+
+        .video-card:hover .video-play-btn,
+        .video-card.is-paused .video-play-btn {
+            transform: translate(-50%,-50%) scale(1.45);
+
+            background: rgba(252,158,209,.85);
+
+            border-color: rgba(252,158,209,.85);
+
+            color: #151016;
+        }
+
+
+        .video-card.is-playing .video-play-btn {
+            opacity: 0;
+        }
+
+
+        .video-card.is-playing:hover .video-play-btn {
+            opacity: 1;
+        }
+
+
+        .video-progress {
+            position: absolute;
+
+            left: 0;
+            right: 0;
+            bottom: 0;
+
+            height: 5px;
+
+            background: rgba(255,255,255,.16);
+
+            z-index: 3;
+
+            cursor: pointer;
+        }
+
+
+        .video-progress-bar {
+            height: 100%;
+            width: 0%;
+
+            background: var(--primary);
+
+            transition: width .12s linear;
+        }
+
+
+        .video-badge {
+            position: absolute;
+
+            top: 12px;
+            right: 12px;
+
+            z-index: 3;
+
+            width: 30px;
+            height: 30px;
+
+            border-radius: 9px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            background: rgba(8,8,13,.55);
+
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+
+            color: var(--primary);
+
+            font-size: 13px;
+
+            pointer-events: none;
         }
 
 
@@ -1839,16 +2013,26 @@
      لوگو:
      logo.png
 
-     نمونه‌کارهای اصلی:
+     آیکون ایتا (کنار دکمه‌ها و شبکه‌های اجتماعی):
+     eitaa-icon.png
+     (این عکس با تکنیک mask رنگش از CSS گرفته می‌شود،
+      پس همیشه همرنگ متن/آیکون کنار خودش درمی‌آید)
+
+     نمونه‌کارهای اصلی (طراحی):
      portfolio/work1.jpg
      portfolio/work2.jpg
      portfolio/work3.jpg
      portfolio/work4.jpg
 
-     نمونه‌کارهای بیشتر:
+     نمونه‌کارهای بیشتر (طراحی):
      portfolio/more1.jpg
      تا
      portfolio/more11.jpg
+
+     نمونه‌کارهای تدوین (ویدیو):
+     portfolio/ttt1.mp4
+     تا
+     portfolio/ttt5.mp4
 
      برای اضافه کردن عکس جدید:
 
@@ -1860,11 +2044,25 @@
 
      "portfolio/work5.jpg"
 
-     فرمت پیشنهادی:
+     برای اضافه کردن ویدیوی تدوین جدید:
+
+     1. فایل ویدیو را داخل پوشه portfolio قرار بده.
+     2. مسیرش را داخل آرایه‌ی portfolioVideos
+        (در بخش JAVASCRIPT پایین فایل) اضافه کن.
+
+     مثال:
+
+     "portfolio/ttt6.mp4"
+
+     فرمت پیشنهادی عکس:
 
      JPG
      PNG
      WEBP
+
+     فرمت پیشنهادی ویدیو:
+
+     MP4 (H.264)
 ============================================================ -->
 
 
@@ -2134,7 +2332,7 @@
                target="_blank"
                class="social-icon">
 
-                <i class="fa-solid fa-paper-plane"></i>
+                <i class="icon-eitaa" aria-hidden="true"></i>
 
             </a>
 
@@ -2430,7 +2628,7 @@
                    class="btn btn-primary contact-btn">
 
 
-                    <i class="fa-solid fa-paper-plane"></i>
+                    <i class="icon-eitaa" aria-hidden="true"></i>
 
 
                     <span data-fa="ارتباط در ایتا"
@@ -2513,7 +2711,7 @@
                class="social-card glass reveal">
 
 
-                <i class="fa-solid fa-paper-plane"></i>
+                <i class="icon-eitaa" aria-hidden="true"></i>
 
                 <h3>ایتا</h3>
 
@@ -2899,7 +3097,7 @@
                        target="_blank"
                        class="social-icon">
 
-                        <i class="fa-solid fa-paper-plane"></i>
+                        <i class="icon-eitaa" aria-hidden="true"></i>
 
                     </a>
 
@@ -3382,6 +3580,25 @@
 
 
     /* =========================================================
+       ویدیوهای نمونه‌کار (تدوین)
+
+       برای اضافه کردن ویدیوی جدید فقط مسیر آن را
+       به آرایه‌ی زیر اضافه کن (داخل پوشه portfolio بگذار).
+    ========================================================= */
+
+    const portfolioVideos = [
+
+        "portfolio/ttt1.mp4",
+        "portfolio/ttt2.mp4",
+        "portfolio/ttt3.mp4",
+        "portfolio/ttt4.mp4",
+        "portfolio/ttt5.mp4",
+        "portfolio/ttt6.mp4"
+
+    ];
+
+
+    /* =========================================================
        LANGUAGE
     ========================================================= */
 
@@ -3568,6 +3785,207 @@
     }
 
 
+    /* =========================================================
+       ویدیوهای نمونه‌کار (تدوین)
+
+       با یک ضربه/کلیک روی کارت، ویدیو پخش یا متوقف می‌شود.
+       دکمه پلی/پاز روی هاور و وقتی متوقف است بزرگ‌تر می‌شود
+       و نوار زمان (progress) پایین ویدیو نمایش داده می‌شود.
+    ========================================================= */
+
+    function createVideoCard(
+        path,
+        index
+    ) {
+
+        const card =
+            document.createElement("div");
+
+
+        card.className =
+            "work-card video-card reveal is-paused";
+
+
+        card.innerHTML = `
+
+            <video
+                src="${path}"
+                preload="metadata"
+                playsinline
+                controlsList="nodownload noremoteplayback noplaybackrate"
+                disablePictureInPicture
+                draggable="false"
+            ></video>
+
+            <div class="video-badge">
+                <i class="fa-solid fa-clapperboard"></i>
+            </div>
+
+            <div class="video-play-btn">
+                <i class="fa-solid fa-play"></i>
+            </div>
+
+            <div class="video-progress">
+                <div class="video-progress-bar"></div>
+            </div>
+
+        `;
+
+
+        const video =
+            card.querySelector("video");
+
+        const playBtn =
+            card.querySelector(".video-play-btn");
+
+        const playIcon =
+            playBtn.querySelector("i");
+
+        const progressWrap =
+            card.querySelector(".video-progress");
+
+        const progressBar =
+            card.querySelector(".video-progress-bar");
+
+
+        function setIcon(isPlaying) {
+
+            playIcon.className =
+                isPlaying
+                    ? "fa-solid fa-pause"
+                    : "fa-solid fa-play";
+
+        }
+
+
+        video.addEventListener(
+            "play",
+            () => {
+
+                document
+                    .querySelectorAll(
+                        ".video-card video"
+                    )
+                    .forEach(
+                        other => {
+
+                            if (
+                                other !== video
+                                &&
+                                !other.paused
+                            ) {
+
+                                other.pause();
+
+                            }
+
+                        }
+                    );
+
+
+                card.classList.add("is-playing");
+                card.classList.remove("is-paused");
+
+                setIcon(true);
+
+            }
+        );
+
+
+        video.addEventListener(
+            "pause",
+            () => {
+
+                card.classList.remove("is-playing");
+                card.classList.add("is-paused");
+
+                setIcon(false);
+
+            }
+        );
+
+
+        video.addEventListener(
+            "ended",
+            () => {
+
+                video.currentTime = 0;
+
+                card.classList.remove("is-playing");
+                card.classList.add("is-paused");
+
+                setIcon(false);
+
+                progressBar.style.width = "0%";
+
+            }
+        );
+
+
+        video.addEventListener(
+            "timeupdate",
+            () => {
+
+                if (!video.duration) return;
+
+                progressBar.style.width =
+                    (
+                        video.currentTime /
+                        video.duration *
+                        100
+                    ) + "%";
+
+            }
+        );
+
+
+        card.addEventListener(
+            "click",
+            () => {
+
+                if (video.paused) {
+
+                    video.play();
+
+                }
+
+                else {
+
+                    video.pause();
+
+                }
+
+            }
+        );
+
+
+        progressWrap.addEventListener(
+            "click",
+            event => {
+
+                event.stopPropagation();
+
+                if (!video.duration) return;
+
+                const rect =
+                    progressWrap.getBoundingClientRect();
+
+                const ratio =
+                    (event.clientX - rect.left) /
+                    rect.width;
+
+                video.currentTime =
+                    ratio * video.duration;
+
+            }
+        );
+
+
+        return card;
+
+    }
+
+
     function renderPortfolio() {
 
         portfolioGrid.innerHTML = "";
@@ -3583,6 +4001,26 @@
                     portfolioGrid.appendChild(
 
                         createWorkCard(
+                            path,
+                            index
+                        )
+
+                    );
+
+                }
+            );
+
+
+        portfolioVideos
+            .forEach(
+                (
+                    path,
+                    index
+                ) => {
+
+                    portfolioGrid.appendChild(
+
+                        createVideoCard(
                             path,
                             index
                         )
